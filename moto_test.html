@@ -23,56 +23,60 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-        font-family:
-            -apple-system, BlinkMacSystemFont,
-            "Segoe UI Variable Text", "Segoe UI",
-            Roboto, "Helvetica Neue", Arial,
-            "Noto Sans", sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
         background: var(--bg);
         color: var(--text);
-        padding: 32px 20px 60px;
-        line-height: 1.6;
-        font-size: 16px;
+        padding: 24px 20px 60px;
+        line-height: 1.65;
+        font-size: 17px;
         -webkit-font-smoothing: antialiased;
         min-height: 100vh;
         display: flex;
         flex-direction: column;
     }
-    .container {
-        max-width: 780px;
+    .container { max-width: 900px; width: 100%; margin: 0 auto; flex: 1; display: flex; flex-direction: column; }
+
+    /* ---------- Баннер ---------- */
+    .banner {
         width: 100%;
-        margin: 0 auto;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
+        display: block;
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 22px;
+        background: #0f172a;
+    }
+    .banner img {
+        width: 100%;
+        height: auto;
+        display: block;
     }
 
+    /* ---------- Шапка ---------- */
     .brand {
-        display: flex; align-items: center; gap: 18px;
-        padding-bottom: 22px;
-        margin-bottom: 22px;
+        display: flex; align-items: center; justify-content: space-between; gap: 18px;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
         border-bottom: 1px solid var(--border);
         flex-wrap: wrap;
     }
-    .brand-logo {
-        width: 72px; height: 72px;
+    .brand-left {
+        display: flex; align-items: center; gap: 14px;
+        flex: 1; min-width: 240px;
+    }
+    .brand-avatar {
+        width: 56px; height: 56px;
         border-radius: 50%;
         flex-shrink: 0;
-        display: block;
         object-fit: cover;
-        background: #0f172a;
         box-shadow: 0 0 0 1px var(--border-strong);
     }
-    .brand-left {
-        display: flex; flex-direction: column; gap: 6px;
-        flex: 1; min-width: 200px;
-    }
+    .brand-text-wrap { display: flex; flex-direction: column; gap: 4px; }
     .brand-title {
         display: inline-block;
         background: #0f172a;
-        padding: 6px 14px;
-        border-radius: 7px;
-        font-size: 1.2rem;
+        padding: 5px 12px;
+        border-radius: 6px;
+        font-size: 1.05rem;
         font-weight: 800;
         letter-spacing: 0.3px;
         line-height: 1.2;
@@ -81,49 +85,88 @@
     .brand-title .white { color: #ffffff; }
     .brand-title .blue  { color: #60a5fa; }
     .brand-title .red   { color: #f87171; }
-    .brand-sub {
-        font-size: 0.9rem;
-        color: var(--text-muted);
-    }
-    .yt-link {
+    .brand-sub { font-size: 0.88rem; color: var(--text-muted); }
+
+    .socials { display: flex; gap: 10px; flex-wrap: wrap; }
+    .social-link {
         display: inline-flex; align-items: center; gap: 8px;
-        padding: 8px 14px;
-        background: #111827;
-        color: #fff;
+        padding: 9px 14px;
+        border-radius: 8px;
         font-size: 0.86rem;
         font-weight: 600;
         text-decoration: none;
-        border-radius: 8px;
-        transition: background 0.15s;
+        color: #fff;
+        transition: filter 0.15s, transform 0.1s;
         flex-shrink: 0;
     }
-    .yt-link:hover { background: #000; }
-    .yt-link svg { width: 15px; height: 15px; fill: currentColor; }
+    .social-link:hover { filter: brightness(1.1); }
+    .social-link:active { transform: scale(0.98); }
+    .social-link svg { width: 16px; height: 16px; fill: currentColor; }
+    .s-yt { background: #dc2626; }
+    .s-vk { background: #0077ff; }
+    .s-rt { background: #111827; }
 
-    .progress-container {
-        width: 100%;
-        height: 4px;
-        background: var(--border);
-        border-radius: 2px;
-        overflow: hidden;
+    /* ---------- Полоса вопросов ---------- */
+    .q-nav {
+        display: flex; flex-wrap: wrap; gap: 6px;
+        padding: 14px 16px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 10px;
         margin-bottom: 18px;
     }
-    .progress-bar {
-        height: 100%;
-        width: 0%;
+    .q-nav-item {
+        width: 32px; height: 32px;
+        display: flex; align-items: center; justify-content: center;
+        border-radius: 6px;
+        font-size: 0.86rem;
+        font-weight: 600;
+        color: var(--text-soft);
+        background: #f3f4f6;
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition: all 0.15s;
+        user-select: none;
+    }
+    .q-nav-item:hover:not(.disabled):not(.current) { background: #e5e7eb; }
+    .q-nav-item.current {
         background: var(--accent);
-        transition: width 0.3s ease;
+        color: #fff;
+        border-color: var(--accent);
+    }
+    .q-nav-item.answered-correct {
+        background: var(--correct-soft);
+        color: #14532d;
+        border-color: var(--correct);
+    }
+    .q-nav-item.answered-wrong {
+        background: var(--wrong-soft);
+        color: #7f1d1d;
+        border-color: var(--wrong);
+    }
+    .q-nav-item.disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+    .q-nav-item.current.answered-correct,
+    .q-nav-item.current.answered-wrong {
+        background: var(--accent);
+        color: #fff;
+        border-color: var(--accent);
     }
 
+    /* ---------- Статистика ---------- */
     .stats-bar {
         display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
-        font-size: 0.88rem;
+        font-size: 0.92rem;
         font-weight: 500;
         color: var(--text-soft);
-        margin-bottom: 22px;
+        margin-bottom: 20px;
+        padding: 0 4px;
     }
     .stats-bar b { color: var(--text); font-weight: 700; }
 
+    /* ---------- Карточка вопроса ---------- */
     .q-card {
         background: var(--card);
         border: 1px solid var(--border);
@@ -136,16 +179,25 @@
     }
     .q-num {
         display: inline-block;
-        font-size: 0.78rem;
-        font-weight: 600;
+        font-size: 0.8rem;
+        font-weight: 700;
         color: var(--text-muted);
-        letter-spacing: 0.8px;
+        letter-spacing: 1px;
         text-transform: uppercase;
-        margin-bottom: 12px;
+        margin-bottom: 16px;
+    }
+    .q-image {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        border-radius: 10px;
+        background: #e5e7eb;
+        margin-bottom: 20px;
+        display: block;
     }
     .q-text {
-        font-size: 1.15rem;
-        font-weight: 600;
+        font-size: 1.22rem;
+        font-weight: 700;
         line-height: 1.45;
         letter-spacing: -0.01em;
         color: var(--text);
@@ -155,62 +207,52 @@
         background: var(--accent-soft);
         border-left: 3px solid var(--accent);
         border-radius: 0 8px 8px 0;
-        padding: 16px 20px;
-        margin-bottom: 24px;
-        font-size: 0.97rem;
+        padding: 14px 18px;
+        margin-bottom: 22px;
+        font-size: 1rem;
         line-height: 1.65;
         color: #1e3a5f;
     }
     .q-situation .s-label {
         display: block;
         font-weight: 800;
-        font-size: 0.9rem;
+        font-size: 0.86rem;
         color: var(--accent);
         letter-spacing: 0.6px;
         text-transform: uppercase;
-        margin-bottom: 8px;
+        margin-bottom: 6px;
     }
 
     .options-list { display: flex; flex-direction: column; gap: 10px; }
 
     .opt-label {
         display: flex; align-items: flex-start; gap: 14px;
-        padding: 14px 16px;
+        padding: 15px 18px;
         background: var(--card);
-        border: 1px solid var(--border);
+        border: 1.5px solid var(--border);
         border-radius: 10px;
         cursor: pointer;
         transition: background 0.12s, border-color 0.12s;
-        font-size: 0.97rem;
+        font-size: 1rem;
         line-height: 1.55;
         user-select: none;
     }
     .opt-label:hover { background: #f9fafb; border-color: var(--border-strong); }
     .opt-label input { position: absolute; opacity: 0; pointer-events: none; }
 
-    .checkmark {
+    .opt-num {
         flex-shrink: 0;
-        margin-top: 2px;
-        height: 20px;
-        width: 20px;
-        background: #fff;
-        border: 1.5px solid var(--border-strong);
+        width: 24px; height: 24px;
         border-radius: 50%;
-        position: relative;
-        transition: all 0.12s;
-    }
-    .opt-label input:checked ~ .checkmark {
-        border-color: var(--accent);
-        background: var(--accent);
-    }
-    .opt-label input:checked ~ .checkmark:after {
-        content: "";
-        position: absolute;
-        left: 6px; top: 3px;
-        width: 5px; height: 9px;
-        border: solid #fff;
-        border-width: 0 2px 2px 0;
-        transform: rotate(45deg);
+        background: #f3f4f6;
+        border: 1px solid var(--border-strong);
+        color: var(--text-soft);
+        font-weight: 700;
+        font-size: 0.82rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 1px;
     }
     .opt-text { flex: 1; }
     .opt-label.locked { cursor: default; pointer-events: none; }
@@ -221,77 +263,76 @@
         border-color: var(--correct) !important;
         color: #14532d;
     }
-    .opt-correct .checkmark { border-color: var(--correct) !important; background: var(--correct) !important; }
-    .opt-correct .checkmark:after {
-        content: ""; position: absolute;
-        left: 6px; top: 3px;
-        width: 5px; height: 9px;
-        border: solid #fff;
-        border-width: 0 2px 2px 0;
-        transform: rotate(45deg);
+    .opt-correct .opt-num {
+        background: var(--correct);
+        border-color: var(--correct);
+        color: #fff;
     }
     .opt-wrong {
         background: var(--wrong-soft) !important;
         border-color: var(--wrong) !important;
         color: #7f1d1d;
     }
-    .opt-wrong .checkmark { border-color: var(--wrong) !important; background: var(--wrong) !important; }
-    .opt-wrong .checkmark:after {
-        content: "✕";
-        position: absolute;
-        left: 50%; top: 50%;
-        transform: translate(-50%, -50%);
+    .opt-wrong .opt-num {
+        background: var(--wrong);
+        border-color: var(--wrong);
         color: #fff;
-        font-size: 11px;
-        font-weight: 800;
     }
 
     .exp-box {
         display: none;
-        margin-top: 20px;
-        padding-top: 20px;
+        margin-top: 22px;
+        padding-top: 22px;
         border-top: 1px solid var(--border);
-        font-size: 0.95rem;
-        line-height: 1.7;
+        font-size: 0.98rem;
+        line-height: 1.75;
         color: var(--text-soft);
     }
     .exp-box.show { display: block; animation: fadeIn 0.2s ease; }
     .exp-box .exp-title {
         display: block;
         font-weight: 700;
-        font-size: 0.82rem;
+        font-size: 0.86rem;
         letter-spacing: 0.8px;
         text-transform: uppercase;
         color: var(--accent);
         margin-bottom: 10px;
     }
     .exp-box strong, .exp-box b { color: var(--text); font-weight: 700; }
-    .correct-card .exp-box .exp-title { color: var(--correct); }
-    .wrong-card .exp-box .exp-title { color: var(--wrong); }
 
     @keyframes fadeIn {
         from { opacity: 0; transform: translateY(-2px); }
         to { opacity: 1; transform: none; }
     }
 
-    .btn-next {
-        display: none;
-        width: 100%;
-        margin-top: 22px;
-        padding: 16px 22px;
+    /* ---------- Кнопки навигации ---------- */
+    .nav-buttons {
+        display: flex; gap: 12px;
+        margin-top: 26px;
+        flex-wrap: wrap;
+    }
+    .btn {
+        flex: 1; min-width: 160px;
+        padding: 14px 22px;
         font-size: 1rem;
         font-weight: 600;
         border-radius: 10px;
         cursor: pointer;
-        border: none;
-        background: var(--accent);
-        color: #fff;
+        border: 1.5px solid transparent;
         font-family: inherit;
-        transition: background 0.15s;
+        transition: background 0.15s, border-color 0.15s, color 0.15s, opacity 0.15s;
     }
-    .btn-next:hover { background: #1d4ed8; }
-    .btn-next.show { display: block; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover:not(:disabled) { background: #1d4ed8; }
+    .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-secondary {
+        background: #fff; color: var(--text);
+        border-color: var(--border-strong);
+    }
+    .btn-secondary:hover:not(:disabled) { background: #f9fafb; border-color: var(--text-muted); }
+    .btn-secondary:disabled { opacity: 0.4; cursor: not-allowed; }
 
+    /* ---------- Финальный экран ---------- */
     .result-screen {
         background: var(--card);
         border: 1px solid var(--border);
@@ -300,11 +341,7 @@
         text-align: center;
         box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     }
-    .result-screen h2 {
-        font-size: 1.3rem;
-        font-weight: 700;
-        margin-bottom: 12px;
-    }
+    .result-screen h2 { font-size: 1.35rem; font-weight: 700; margin-bottom: 12px; }
     .result-score {
         font-size: 3rem;
         font-weight: 800;
@@ -314,71 +351,46 @@
     }
     .result-score.good { color: var(--correct); }
     .result-score.bad { color: var(--wrong); }
-    .result-detail {
-        font-size: 0.95rem;
-        color: var(--text-muted);
-        margin-bottom: 18px;
-    }
+    .result-detail { font-size: 0.98rem; color: var(--text-muted); margin-bottom: 18px; }
     .result-rank {
-        font-size: 1.05rem;
+        font-size: 1.08rem;
         font-weight: 600;
         color: var(--text-soft);
-        line-height: 1.5;
+        line-height: 1.55;
         margin-bottom: 28px;
-        max-width: 520px;
-        margin-left: auto;
-        margin-right: auto;
+        max-width: 540px;
+        margin-left: auto; margin-right: auto;
     }
-    .result-actions {
-        display: flex;
-        gap: 12px;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-    .btn {
-        padding: 14px 24px;
-        font-size: 0.98rem;
-        font-weight: 600;
-        border-radius: 10px;
-        cursor: pointer;
-        border: 1px solid transparent;
-        font-family: inherit;
-        transition: background 0.15s, border-color 0.15s, color 0.15s;
-    }
-    .btn-primary { background: var(--accent); color: #fff; }
-    .btn-primary:hover { background: #1d4ed8; }
-    .btn-secondary { background: #fff; color: var(--text); border-color: var(--border-strong); }
-    .btn-secondary:hover { background: #f9fafb; }
+    .result-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
+    /* ---------- Футер ---------- */
     .footer {
         margin-top: 40px;
-        padding-top: 24px;
+        padding-top: 26px;
         border-top: 1px solid var(--border);
     }
-    .footer-title {
-        font-size: 1.1rem;
-        font-weight: 700;
-        margin-bottom: 12px;
-    }
-    .footer-text {
-        font-size: 0.94rem;
-        color: var(--text-soft);
-        line-height: 1.7;
-    }
+    .footer-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 12px; }
+    .footer-text { font-size: 0.96rem; color: var(--text-soft); line-height: 1.75; }
     .footer-text p { margin-bottom: 10px; }
     .footer-text p:last-child { margin-bottom: 0; }
+    .footer-socials {
+        margin-top: 20px;
+        display: flex; gap: 10px; flex-wrap: wrap;
+    }
 
     @media (max-width: 640px) {
-        body { padding: 20px 14px 40px; font-size: 15px; }
-        .brand { gap: 14px; }
-        .brand-logo { width: 58px; height: 58px; }
-        .brand-title { font-size: 1.05rem; padding: 5px 11px; }
-        .brand-sub { font-size: 0.85rem; }
-        .q-card { padding: 22px 20px; }
-        .q-text { font-size: 1.05rem; }
-        .q-situation { padding: 14px 16px; font-size: 0.94rem; }
-        .q-situation .s-label { font-size: 0.85rem; }
-        .opt-label { padding: 12px 14px; font-size: 0.94rem; }
+        body { padding: 16px 12px 40px; font-size: 16px; }
+        .banner { border-radius: 8px; margin-bottom: 16px; }
+        .brand { gap: 12px; }
+        .brand-avatar { width: 46px; height: 46px; }
+        .brand-title { font-size: 0.95rem; padding: 4px 10px; }
+        .brand-sub { font-size: 0.82rem; }
+        .social-link { padding: 8px 12px; font-size: 0.82rem; }
+        .q-card { padding: 20px 18px; }
+        .q-text { font-size: 1.08rem; }
+        .q-situation { padding: 12px 14px; font-size: 0.94rem; }
+        .opt-label { padding: 13px 14px; font-size: 0.95rem; }
+        .q-nav-item { width: 28px; height: 28px; font-size: 0.8rem; }
         .result-score { font-size: 2.4rem; }
         .result-screen { padding: 28px 20px; }
     }
@@ -387,27 +399,42 @@
 <body>
 <div class="container">
 
+    <!-- Баннер -->
+    <div class="banner">
+        <img src="banner.jpg" alt="Ilya Bike SPb">
+    </div>
+
+    <!-- Шапка -->
     <div class="brand">
-        <img src="logo.png" alt="Ilya Bike SPb" class="brand-logo"
-             onerror="this.style.display='none'">
         <div class="brand-left">
-            <div class="brand-title">
-                <span class="white">Ilya</span> <span class="blue">Bike</span> <span class="red">SPb</span>
+            <img src="avatar.jpg" alt="Ilya Bike SPb" class="brand-avatar" onerror="this.style.display='none'">
+            <div class="brand-text-wrap">
+                <div class="brand-title">
+                    <span class="white">Ilya</span> <span class="blue">Bike</span> <span class="red">SPb</span>
+                </div>
+                <div class="brand-sub">Практический тест по управлению мотоциклом. То, чего нет в билетах.</div>
             </div>
-            <div class="brand-sub">Практический тест по управлению мотоциклом. То, чего нет в билетах.</div>
         </div>
-        <a class="yt-link" href="https://www.youtube.com/@IlyaBikeSPb/" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1 31.4 31.4 0 0 0 .5-5.8 31.4 31.4 0 0 0-.5-5.8zM9.6 15.6V8.4l6.2 3.6z"/>
-            </svg>
-            YouTube
-        </a>
+        <div class="socials">
+            <a class="social-link s-yt" href="https://youtube.com/@IlyaBikeSPb" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1 31.4 31.4 0 0 0 .5-5.8 31.4 31.4 0 0 0-.5-5.8zM9.6 15.6V8.4l6.2 3.6z"/></svg>
+                YouTube
+            </a>
+            <a class="social-link s-vk" href="https://vkvideo.ru/@club240087917" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24"><path d="M13.2 17.5c-6.1 0-9.7-4.3-9.8-11.4h3c.1 5.2 2.5 7.4 4.3 7.9V6.1h2.9v4.5c1.8-.2 3.7-2.2 4.4-4.5h2.9c-.5 2.8-2.6 4.8-4 5.6 1.4.7 3.8 2.4 4.7 5.8h-3.2c-.7-2.2-2.4-3.9-4.8-4.1v4.1h-.4z"/></svg>
+                VK Video
+            </a>
+            <a class="social-link s-rt" href="https://rutube.ru/channel/149144" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24"><path d="M3 5h14a4 4 0 0 1 0 8h-4l4 6h-4.2l-4-6H7v6H3V5zm4 3v2h9a1 1 0 0 0 0-2H7z"/></svg>
+                RuTube
+            </a>
+        </div>
     </div>
 
-    <div class="progress-container">
-        <div class="progress-bar" id="p-bar"></div>
-    </div>
+    <!-- Полоса вопросов -->
+    <div class="q-nav" id="q-nav"></div>
 
+    <!-- Статистика -->
     <div class="stats-bar" id="stats-panel">
         <span>Вопрос: <b id="progress-text">1 / 25</b></span>
         <span>Верно: <b id="score-text">0</b></span>
@@ -424,343 +451,362 @@
             <p>Как тормозить в наклоне, что делать на песке, как вести себя в слепой зоне фуры — об этом в билетах ни слова, а на дороге именно это решает, останешься ты на колёсах или нет.</p>
             <p>Этот тест собран, чтобы закрыть этот пробел. Вопросы построены на физике управления и реальных городских ситуациях, а не на формальных правилах.</p>
         </div>
+        <div class="footer-socials">
+            <a class="social-link s-yt" href="https://youtube.com/@IlyaBikeSPb" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1 31.4 31.4 0 0 0 .5-5.8 31.4 31.4 0 0 0-.5-5.8zM9.6 15.6V8.4l6.2 3.6z"/></svg>
+                YouTube
+            </a>
+            <a class="social-link s-vk" href="https://vkvideo.ru/@club240087917" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24"><path d="M13.2 17.5c-6.1 0-9.7-4.3-9.8-11.4h3c.1 5.2 2.5 7.4 4.3 7.9V6.1h2.9v4.5c1.8-.2 3.7-2.2 4.4-4.5h2.9c-.5 2.8-2.6 4.8-4 5.6 1.4.7 3.8 2.4 4.7 5.8h-3.2c-.7-2.2-2.4-3.9-4.8-4.1v4.1h-.4z"/></svg>
+                VK Video
+            </a>
+            <a class="social-link s-rt" href="https://rutube.ru/channel/149144" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24"><path d="M3 5h14a4 4 0 0 1 0 8h-4l4 6h-4.2l-4-6H7v6H3V5zm4 3v2h9a1 1 0 0 0 0-2H7z"/></svg>
+                RuTube
+            </a>
+        </div>
     </div>
 </div>
 
 <script>
     const data = [
-        {
-            s: "Вам необходимо развернуть мотоцикл на узкой двухполосной дороге в один приём. Скорость минимальная (пешеходная, около 3–5 км/ч). Линии разметки и бордюры задевать нельзя.",
-            q: "Каковы Ваши правильные действия органами управления и корпусом?",
-            o: [
-                "Двигаться на полностью включённом сцеплении, регулируя скорость ручкой газа, наклонять корпус внутрь поворота для уменьшения радиуса, при необходимости деликатно притормаживать передним тормозом.",
-                "Выжать сцепление наполовину («серая зона»), зафиксировать ручку газа на слегка повышенных оборотах, дозировать скорость исключительно задним тормозом, смещая корпус наружу от поворота (контрбаланс).",
-                "Полностью выжать сцепление и катиться по инерции, выполняя манёвр за счёт максимального поворота руля и наклона мотоцикла внутрь поворота, контролируя баланс передним тормозом.",
-                "Удерживать ровный газ на первой передаче при полностью отпущенном сцеплении, дозировать скорость комбинированным нажатием переднего и заднего тормозов, сохраняя вертикальное положение корпуса."
-            ], c: 1,
-            e: "На сверхнизкой скорости гироскопический эффект колёс минимален, мотоцикл теряет стабильность. Для удержания баланса необходима непрерывная ровная тяга на заднем колесе. Она достигается за счёт удержания рычага сцепления в зоне проскальзывания («серой зоне») при постоянных оборотах двигателя. <strong>Скорость манёвра регулируется только педалью заднего тормоза.</strong> Применение переднего тормоза при повёрнутом руле на малой скорости мгновенно вызывает подламывание передней вилки и падение мотоцикла внутрь поворота. Смещение корпуса водителя наружу от траектории (контрбаланс) позволяет сильнее наклонить сам мотоцикл, что существенно уменьшает радиус разворота без потери равновесия."
+        { s: "Вам необходимо развернуть мотоцикл на узкой двухполосной дороге в один приём. Скорость минимальная (пешеходная, около 3–5 км/ч). Линии разметки и бордюры задевать нельзя.",
+          q: "Каковы Ваши правильные действия органами управления и корпусом?",
+          o: [
+            "Двигаться на полностью включённом сцеплении, регулируя скорость ручкой газа, наклонять корпус внутрь поворота для уменьшения радиуса, при необходимости деликатно притормаживать передним тормозом.",
+            "Выжать сцепление наполовину («серая зона»), зафиксировать ручку газа на слегка повышенных оборотах, дозировать скорость исключительно задним тормозом, смещая корпус наружу от поворота (контрбаланс).",
+            "Полностью выжать сцепление и катиться по инерции, выполняя манёвр за счёт максимального поворота руля и наклона мотоцикла внутрь поворота, контролируя баланс передним тормозом.",
+            "Удерживать ровный газ на первой передаче при полностью отпущенном сцеплении, дозировать скорость комбинированным нажатием переднего и заднего тормозов, сохраняя вертикальное положение корпуса."
+          ], c: 1,
+          e: "На сверхнизкой скорости гироскопический эффект колёс минимален, мотоцикл теряет стабильность. Для удержания баланса необходима непрерывная ровная тяга на заднем колесе. Она достигается за счёт удержания рычага сцепления в зоне проскальзывания («серой зоне») при постоянных оборотах двигателя. <strong>Скорость манёвра регулируется только педалью заднего тормоза.</strong> Применение переднего тормоза при повёрнутом руле на малой скорости мгновенно вызывает подламывание передней вилки и падение мотоцикла внутрь поворота. Смещение корпуса водителя наружу от траектории (контрбаланс) позволяет сильнее наклонить сам мотоцикл, что существенно уменьшает радиус разворота без потери равновесия."
         },
-        {
-            s: "Вы двигаетесь в плотном потоке между рядами автомобилей. Скорость потока колеблется от 2 до 5 км/ч. Вам нужно ехать максимально медленно и прямолинейно, не выставляя ноги на асфальт и избегая рыскания руля.",
-            q: "Какая техника управления обеспечивает наибольшую стабильность мотоцикла?",
-            o: [
-                "Направить взгляд далеко вперёд по траектории движения, плотно сжать бак коленями, расслабить руки на руле, удерживать ровную тягу сцеплением в «серой зоне» и стабилизировать траекторию лёгким прижатием заднего тормоза.",
-                "Контролировать траекторию взглядом непосредственно перед передним колесом, жёстко зафиксировать руль прямыми руками, регулировать скорость периодическим полным выжимом и отпусканием сцепления.",
-                "Сместить корпус вперёд к бензобаку, расслабить колени, удерживать скорость ручкой газа при полностью включённом сцеплении, контролируя дистанцию передним тормозом.",
-                "Двигаться короткими импульсами: плавно открывать газ для набора скорости, затем полностью выжимать сцепление и катиться накатом, балансируя смещением корпуса влево-вправо."
-            ], c: 0,
-            e: "Прямолинейная стабильность на пешеходной скорости зависит от распределения усилий райдера. Направление взгляда под колесо или на стоящую рядом машину лишает мозг пространственных ориентиров, вызывая инстинктивное влияние рулём; смотреть нужно строго в точку, куда необходимо приехать. Плотный охват бака ногами жёстко связывает массу тела водителя с рамой мотоцикла, а расслабленные руки исключают передачу непроизвольных колебаний корпуса на руль. Задний тормоз в этой связке работает как динамический стабилизатор («якорь»): создавая постоянное лёгкое сопротивление и натяжение приводной цепи/ремня, он вытягивает геометрию мотоцикла в прямую линию, гася рыскание переднего колеса."
+        { s: "Вы двигаетесь в плотном потоке между рядами автомобилей. Скорость потока колеблется от 2 до 5 км/ч. Вам нужно ехать максимально медленно и прямолинейно, не выставляя ноги на асфальт и избегая рыскания руля.",
+          q: "Какая техника управления обеспечивает наибольшую стабильность мотоцикла?",
+          o: [
+            "Направить взгляд далеко вперёд по траектории движения, плотно сжать бак коленями, расслабить руки на руле, удерживать ровную тягу сцеплением в «серой зоне» и стабилизировать траекторию лёгким прижатием заднего тормоза.",
+            "Контролировать траекторию взглядом непосредственно перед передним колесом, жёстко зафиксировать руль прямыми руками, регулировать скорость периодическим полным выжимом и отпусканием сцепления.",
+            "Сместить корпус вперёд к бензобаку, расслабить колени, удерживать скорость ручкой газа при полностью включённом сцеплении, контролируя дистанцию передним тормозом.",
+            "Двигаться короткими импульсами: плавно открывать газ для набора скорости, затем полностью выжимать сцепление и катиться накатом, балансируя смещением корпуса влево-вправо."
+          ], c: 0,
+          e: "Прямолинейная стабильность на пешеходной скорости зависит от распределения усилий райдера. Направление взгляда под колесо или на стоящую рядом машину лишает мозг пространственных ориентиров, вызывая инстинктивное влияние рулём; смотреть нужно строго в точку, куда необходимо приехать. Плотный охват бака ногами жёстко связывает массу тела водителя с рамой мотоцикла, а расслабленные руки исключают передачу непроизвольных колебаний корпуса на руль. Задний тормоз в этой связке работает как динамический стабилизатор («якорь»): создавая постоянное лёгкое сопротивление и натяжение приводной цепи/ремня, он вытягивает геометрию мотоцикла в прямую линию, гася рыскание переднего колеса."
         },
-        {
-            s: "Вы остановились на регулируемом перекрёстке, дорога уходит круто вверх. Сзади вплотную подкатился автомобиль. Вам нужно тронуться плавно, без малейшего отката назад и без пробуксовки заднего колеса.",
-            q: "Укажите правильную последовательность Ваших действий органами управления:",
-            o: [
-                "Удерживать мотоцикл от отката рычагом переднего тормоза. При включении зелёного сигнала быстро отпустить тормоз, одновременно интенсивно открыть газ и плавно отпустить сцепление.",
-                "Зафиксировать мотоцикл на склоне комбинированным нажатием обоих тормозов. При старте одновременно отпустить тормоза, поймать момент сцепления и добавить газ.",
-                "Удерживать мотоцикл педалью заднего тормоза (правая нога). При старте плавно подвести сцепление до момента подхвата тяги (небольшое падение оборотов), добавить газ и плавно отпускать задний тормоз по мере начала движения.",
-                "Включить нейтральную передачу, удерживать мотоцикл передним тормозом. При старте выжать сцепление, включить первую передачу, отпустить тормоз и резко открыть газ."
-            ], c: 2,
-            e: "Использование переднего тормоза для удержания мотоцикла на подъёме — типичная автомобильная привычка, которая на двух колёсах неэффективна. В этом случае правая рука вынуждена одновременно выполнять два противоположных и точных движения: отпускать рычаг тормоза и открывать ручку газа, что неизбежно ведёт либо к откату, либо к глушению двигателя из-за перегрузки. Правильный алгоритм требует фиксации мотоцикла <strong>исключительно педалью заднего тормоза (правая нога).</strong> Это полностью освобождает правую руку для точного дозирования тяги ручкой газа. Водитель плавно отпускает сцепление до момента, пока диски не начнут смыкаться (подвеска мотоцикла слегка сожмётся, обороты просядут) — это сигнал, что тяга пошла на колесо. Только после этого нога плавно отпускает педаль тормоза, обеспечивая старт без миллиметра отката."
+        { s: "Вы остановились на регулируемом перекрёстке, дорога уходит круто вверх. Сзади вплотную подкатился автомобиль. Вам нужно тронуться плавно, без малейшего отката назад и без пробуксовки заднего колеса.",
+          q: "Укажите правильную последовательность Ваших действий органами управления:",
+          o: [
+            "Удерживать мотоцикл от отката рычагом переднего тормоза. При включении зелёного сигнала быстро отпустить тормоз, одновременно интенсивно открыть газ и плавно отпустить сцепление.",
+            "Зафиксировать мотоцикл на склоне комбинированным нажатием обоих тормозов. При старте одновременно отпустить тормоза, поймать момент сцепления и добавить газ.",
+            "Удерживать мотоцикл педалью заднего тормоза (правая нога). При старте плавно подвести сцепление до момента подхвата тяги (небольшое падение оборотов), добавить газ и плавно отпускать задний тормоз по мере начала движения.",
+            "Включить нейтральную передачу, удерживать мотоцикл передним тормозом. При старте выжать сцепление, включить первую передачу, отпустить тормоз и резко открыть газ."
+          ], c: 2,
+          e: "Использование переднего тормоза для удержания мотоцикла на подъёме — типичная автомобильная привычка, которая на двух колёсах неэффективна. В этом случае правая рука вынуждена одновременно выполнять два противоположных и точных движения: отпускать рычаг тормоза и открывать ручку газа, что неизбежно ведёт либо к откату, либо к глушению двигателя из-за перегрузки. Правильный алгоритм требует фиксации мотоцикла <strong>исключительно педалью заднего тормоза (правая нога).</strong> Это полностью освобождает правую руку для точного дозирования тяги ручкой газа."
         },
-        {
-            s: "Вы спускаетесь по крутому склону вниз и Вам необходимо полностью остановиться у стоп-линии.",
-            q: "Как правильно распределить тормозные усилия и зафиксировать мотоцикл в момент остановки?",
-            o: [
-                "Использовать оба тормоза для замедления. За 1–2 метра до полной остановки полностью отпустить передний тормоз, плавно дотормозить исключительно задним тормозом и выставить левую ногу на асфальт.",
-                "Тормозить преимущественно передним тормозом, так как на спуске он максимально эффективен. Удерживать рычаг переднего тормоза нажатым до полной остановки, после чего выставить левую ногу.",
-                "Использовать только задний тормоз на протяжении всего спуска во избежание опрокидывания мотоцикла через руль. После остановки выставить правую ногу на асфальт.",
-                "Замедлить мотоцикл обоими тормозами до полной остановки. В точке остановки жёстко зажать передний тормоз, выставить правую ногу, а левую удерживать на подножке для контроля КПП."
-            ], c: 0,
-            e: "На спуске под уклон сила инерции и сила тяжести максимально смещают вес мотоцикла вперёд, сильно загружая переднее колесо и разгружая заднее. Передний тормоз в этих условиях имеет колоссальную эффективность, и основное замедление выполняется им. Однако использовать его в финальной точке остановки (последний метр) <strong>крайне опасно</strong>. На крутом уклоне вилка мотоцикла уже максимально сжата. Малейший перебор с усилием на рычаге переднего тормоза в момент полной остановки или незначительный поворот руля вызовет мгновенное подламывание переднего колеса и блокировку подвески, что приведёт к падению набок. Безопасная техника: гасить скорость обоими тормозами, но перед самой остановкой полностью распустить передний тормоз и мягко зафиксировать байк задним. Левая нога уходит на асфальт."
+        { s: "Вы спускаетесь по крутому склону вниз и Вам необходимо полностью остановиться у стоп-линии.",
+          q: "Как правильно распределить тормозные усилия и зафиксировать мотоцикл в момент остановки?",
+          o: [
+            "Использовать оба тормоза для замедления. За 1–2 метра до полной остановки полностью отпустить передний тормоз, плавно дотормозить исключительно задним тормозом и выставить левую ногу на асфальт.",
+            "Тормозить преимущественно передним тормозом, так как на спуске он максимально эффективен. Удерживать рычаг переднего тормоза нажатым до полной остановки, после чего выставить левую ногу.",
+            "Использовать только задний тормоз на протяжении всего спуска во избежание опрокидывания мотоцикла через руль. После остановки выставить правую ногу на асфальт.",
+            "Замедлить мотоцикл обоими тормозами до полной остановки. В точке остановки жёстко зажать передний тормоз, выставить правую ногу, а левую удерживать на подножке для контроля КПП."
+          ], c: 0,
+          e: "На спуске под уклон сила инерции и сила тяжести максимально смещают вес мотоцикла вперёд, сильно загружая переднее колесо и разгружая заднее. Передний тормоз в этих условиях имеет колоссальную эффективность, и основное замедление выполняется им. Однако использовать его в финальной точке остановки <strong>крайне опасно</strong>. Безопасная техника: гасить скорость обоими тормозами, но перед самой остановкой полностью распустить передний тормоз и мягко зафиксировать байк задним."
         },
-        {
-            s: "Вы движетесь по парковочной зоне на скорости около 5 км/ч с пассажиром на заднем сиденье. Вам нужно совершить поворот под прямым углом (90 градусов) в узкий проезд между припаркованными автомобилями.",
-            q: "Каковы особенности техники выполнения данного манёвра?",
-            o: [
-                "Выполнять манёвр в обычном режиме, но с более глубоким наклоном мотоцикла внутрь поворота, компенсируя возросшую массу активным использованием переднего тормоза.",
-                "Полностью выжать сцепление и пройти поворот накатом по инерции, попросив пассажира наклонить корпус в сторону, противоположную повороту.",
-                "Совершать манёвр с минимальным наклоном мотоцикла (удерживая его ближе к вертикали), закладывая радиус преимущественно физическим поворотом руля; полностью исключить передний тормоз и удерживать повышенную тягу в «серой зоне» сцепления.",
-                "Двигаться на полностью включённом сцеплении на минимальных оборотах двигателя, сохраняя прямолинейное положение руля и смещая корпус водителя внутрь поворота."
-            ], c: 2,
-            e: "Наличие пассажира, который сидит высоко и сзади, критически смещает центр тяжести всей системы вверх. На сверхнизкой скорости (5 км/ч) мотоцикл становится экстремально валким. Если водитель попытается заложить поворот через привычный наклон байка, тяжёлая корма мгновенно утянет мотоцикл вниз, и удержать его силой ног будет невозможно. Поэтому геометрия манёвра меняется: мотоцикл удерживается максимально вертикально, а поворот осуществляется за счёт физического поворота руля. Чтобы компенсировать возросшую инертность и массу, тяга двигателя в «серой зоне» сцепления должна быть выше, чем при одиночной езде. <strong>Передний тормоз полностью исключается из работы:</strong> его нажатие на малой скорости с пассажиром мгновенно дестабилизирует вилку и завалит мотоцикл."
+        { s: "Вы движетесь по парковочной зоне на скорости около 5 км/ч с пассажиром на заднем сиденье. Вам нужно совершить поворот под прямым углом (90 градусов) в узкий проезд между припаркованными автомобилями.",
+          q: "Каковы особенности техники выполнения данного манёвра?",
+          o: [
+            "Выполнять манёвр в обычном режиме, но с более глубоким наклоном мотоцикла внутрь поворота, компенсируя возросшую массу активным использованием переднего тормоза.",
+            "Полностью выжать сцепление и пройти поворот накатом по инерции, попросив пассажира наклонить корпус в сторону, противоположную повороту.",
+            "Совершать манёвр с минимальным наклоном мотоцикла (удерживая его ближе к вертикали), закладывая радиус преимущественно физическим поворотом руля; полностью исключить передний тормоз и удерживать повышенную тягу в «серой зоне» сцепления.",
+            "Двигаться на полностью включённом сцеплении на минимальных оборотах двигателя, сохраняя прямолинейное положение руля и смещая корпус водителя внутрь поворота."
+          ], c: 2,
+          e: "Наличие пассажира, который сидит высоко и сзади, критически смещает центр тяжести всей системы вверх. На сверхнизкой скорости (5 км/ч) мотоцикл становится экстремально валким. Поэтому геометрия манёвра меняется: мотоцикл удерживается максимально вертикально, а поворот осуществляется за счёт физического поворота руля. <strong>Передний тормоз полностью исключается из работы.</strong>"
         },
-        {
-            s: "Вы двигаетесь по прямой дороге со скоростью 60 км/ч на мотоцикле без системы ABS. Внезапно в Вашей полосе останавливается автомобиль. Вам необходимо остановиться в кратчайший срок.",
-            q: "Каков наиболее эффективный и безопасный алгоритм действий органами управления?",
-            o: [
-                "Выжать сцепление, плавно, но быстро (прогрессивно) наращивать усилие на переднем тормозе в два этапа (сначала прижать для загрузки подвески, затем мощно дожимать), одновременно деликатно помогая задним тормозом и ослабляя нажим на него по мере замедления.",
-                "Мгновенно с максимальным усилием зажать рычаг переднего тормоза до упора, зафиксировать руль прямыми руками и выставить обе ноги на асфальт для удержания баланса.",
-                "Зажать педаль заднего тормоза до полной блокировки колеса для стабилизации кормы, а передний тормоз задействовать только после падения скорости до 20 км/ч во избежание опрокидывания.",
-                "Полностью закрыть газ и начать интенсивно переключать передачи вниз до первой, используя исключительно торможение двигателем, не задействуя тормозные системы."
-            ], c: 0,
-            e: "При интенсивном замедлении под действием сил инерции происходит динамическое перераспределение веса мотоцикла: до 70–90% всей массы смещается на переднее колесо. Чтобы передняя шина эффективно зацепилась за асфальт, её необходимо предварительно загрузить. Если зажать рычаг переднего тормоза резко и во всю силу (вариант 2), <strong>колесо заблокируется и соскользнёт до того, как передняя вилка сожмётся</strong> и вес перейдёт вперёд — это приведёт к мгновенному падению (лоусайду). Задний тормоз эффективен только в самом начале торможения, но по мере замедления заднее колесо разгружается, теряет зацеп и при неизменном давлении на педаль легко уходит в юз."
+        { s: "Вы двигаетесь по прямой дороге со скоростью 60 км/ч на мотоцикле без системы ABS. Внезапно в Вашей полосе останавливается автомобиль. Вам необходимо остановиться в кратчайший срок.",
+          q: "Каков наиболее эффективный и безопасный алгоритм действий органами управления?",
+          o: [
+            "Выжать сцепление, плавно, но быстро (прогрессивно) наращивать усилие на переднем тормозе в два этапа (сначала прижать для загрузки подвески, затем мощно дожимать), одновременно деликатно помогая задним тормозом и ослабляя нажим на него по мере замедления.",
+            "Мгновенно с максимальным усилием зажать рычаг переднего тормоза до упора, зафиксировать руль прямыми руками и выставить обе ноги на асфальт для удержания баланса.",
+            "Зажать педаль заднего тормоза до полной блокировки колеса для стабилизации кормы, а передний тормоз задействовать только после падения скорости до 20 км/ч во избежание опрокидывания.",
+            "Полностью закрыть газ и начать интенсивно переключать передачи вниз до первой, используя исключительно торможение двигателем, не задействуя тормозные системы."
+          ], c: 0,
+          e: "При интенсивном замедлении под действием сил инерции происходит динамическое перераспределение веса мотоцикла: до 70–90% всей массы смещается на переднее колесо. <strong>Если зажать рычаг переднего тормоза резко и во всю силу — колесо заблокируется и соскользнёт до того, как передняя вилка сожмётся.</strong> Торможение должно быть прогрессивным."
         },
-        {
-            s: "Вы двигаетесь со скоростью 50 км/ч. Внезапно прямо перед Вами на полосе оказывается препятствие. Дистанции для остановки физически нет. Вам необходимо мгновенно сместиться в соседний ряд и сразу вернуться обратно.",
-            q: "Как правильно заставить мотоцикл совершить этот быстрый манёвр?",
-            o: [
-                "Начать интенсивно крутить руль корпусом в сторону объезда, активно выставляя колено и смещая центр тяжести внутрь манёвра при полностью зажатом переднем тормозе.",
-                "Выжать сцепление, полностью закрыть газ и попытаться наклонить мотоцикл силой давления стоп на подножки, сохраняя руль в зафиксированном положении.",
-                "Применить технику двойного контрруления: резко толкнуть руль правой рукой вперёд (от себя) для мгновенного ухода влево, а затем толкнуть левой рукой для возврата на курс. Тормоза не трогать, удерживать ровный газ.",
-                "Сорвать заднее колесо в кратковременный юз нажатием заднего тормоза, чтобы за счёт заноса развернуть корпус мотоцикла в сторону свободного пространства."
-            ], c: 2,
-            e: "На скоростях выше 30–40 км/ч мотоцикл из-за гироскопического эффекта колёс превращается в стабильную систему, которую невозможно мгновенно повернуть обычным поворотом руля или наклоном тела. Единственный способ заставить его резко уйти с траектории — <strong>контрруление</strong>. Чтобы уклониться влево, необходимо кратковременно толкнуть правую рукоятку руля вперёд. Геометрия вилки заставит мотоцикл моментально «подломиться» и уйти в левый наклон. Для стабилизации курса импульс повторяется в противоположную сторону. <strong>Задействовать тормоза в момент самого манёвра категорически запрещено:</strong> тормозное усилие распрямит мотоцикл и заблокирует рулевое управление."
+        { s: "Вы двигаетесь со скоростью 50 км/ч. Внезапно прямо перед Вами на полосе оказывается препятствие. Дистанции для остановки физически нет. Вам необходимо мгновенно сместиться в соседний ряд и сразу вернуться обратно.",
+          q: "Как правильно заставить мотоцикл совершить этот быстрый манёвр?",
+          o: [
+            "Начать интенсивно крутить руль корпусом в сторону объезда, активно выставляя колено и смещая центр тяжести внутрь манёвра при полностью зажатом переднем тормозе.",
+            "Выжать сцепление, полностью закрыть газ и попытаться наклонить мотоцикл силой давления стоп на подножки, сохраняя руль в зафиксированном положении.",
+            "Применить технику двойного контрруления: резко толкнуть руль правой рукой вперёд (от себя) для мгновенного ухода влево, а затем толкнуть левой рукой для возврата на курс. Тормоза не трогать, удерживать ровный газ.",
+            "Сорвать заднее колесо в кратковременный юз нажатием заднего тормоза, чтобы за счёт заноса развернуть корпус мотоцикла в сторону свободного пространства."
+          ], c: 2,
+          e: "На скоростях выше 30–40 км/ч мотоцикл из-за гироскопического эффекта колёс превращается в стабильную систему, которую невозможно мгновенно повернуть обычным поворотом руля или наклоном тела. Единственный способ заставить его резко уйти с траектории — <strong>контрруление</strong>. <strong>Задействовать тормоза в момент самого манёвра категорически запрещено.</strong>"
         },
-        {
-            s: "Вы заходите в затяжной поворот на скорости 60 км/ч, мотоцикл находится в наклоне. Внезапно на траектории движения Вы замечаете препятствие, требующее экстренного замедления.",
-            q: "Каковы Ваши действия в данной ситуации?",
-            o: [
-                "Резко зажать рычаг переднего тормоза до упора, одновременно увеличивая угол наклона мотоцикла корпусом, чтобы удержаться внутри своей полосы.",
-                "Выжать сцепление и заблокировать заднее колесо педалью тормоза, пустив мотоцикл в контролируемый боковой занос.",
-                "Кратковременным и резким импульсом руля поднять мотоцикл из наклона в вертикальное положение и только после этого начать жёсткое экстренное торможение по прямой.",
-                "Использовать исключительно деликатное прерывистое нажатие переднего тормоза, плавно увеличивая угол наклона мотоцикла до касания подножками асфальта."
-            ], c: 2,
-            e: "Пятно контакта шины имеет ограниченный запас сцепления с дорогой. В повороте этот ресурс практически полностью расходуется на удержание мотоцикла от бокового скольжения (центробежная сила). Если в наклоне добавить мощное продольное тормозное усилие, <strong>зацеп мгновенно сорвётся</strong>, что приведёт к сносу колёс. Кроме того, физика мотоцикла такова, что торможение передним тормозом в наклоне стремится выпрямить байк, уводя его с траектории наружу (прямо на встречную полосу или обочину). Единственный безопасный способ экстренно остановиться — <strong>на долю секунды прервать поворот, поставить мотоцикл строго вертикально и исполнить классическое торможение всеми тормозами по прямой.</strong>"
+        { s: "Вы заходите в затяжной поворот на скорости 60 км/ч, мотоцикл находится в наклоне. Внезапно на траектории движения Вы замечаете препятствие, требующее экстренного замедления.",
+          q: "Каковы Ваши действия в данной ситуации?",
+          o: [
+            "Резко зажать рычаг переднего тормоза до упора, одновременно увеличивая угол наклона мотоцикла корпусом, чтобы удержаться внутри своей полосы.",
+            "Выжать сцепление и заблокировать заднее колесо педалью тормоза, пустив мотоцикл в контролируемый боковой занос.",
+            "Кратковременным и резким импульсом руля поднять мотоцикл из наклона в вертикальное положение и только после этого начать жёсткое экстренное торможение по прямой.",
+            "Использовать исключительно деликатное прерывистое нажатие переднего тормоза, плавно увеличивая угол наклона мотоцикла до касания подножками асфальта."
+          ], c: 2,
+          e: "Пятно контакта шины имеет ограниченный запас сцепления с дорогой. В повороте этот ресурс практически полностью расходуется на удержание мотоцикла от бокового скольжения. Если в наклоне добавить мощное продольное тормозное усилие, <strong>зацеп мгновенно сорвётся.</strong> Единственный безопасный способ — <strong>сначала выпрямить байк, потом тормозить.</strong>"
         },
-        {
-            s: "При перестроении на загородном шоссе Ваш мотоцикл попадает на участок со снятым верхним слоем асфальта (продольные борозды). Руль начинает мелко вилять, создавая ощущение потери контроля.",
-            q: "Как правильно стабилизировать мотоцикл и продолжить движение?",
-            o: [
-                "Расслабить руки в локтях и кистях (не мешать рулю совершать его мелкие колебания), плотно сжать бак коленями, сохранять абсолютно ровный газ и смотреть далеко вперёд.",
-                "Вцепиться в руль максимальным усилием рук, чтобы жёстко погасить виляние переднего колеса, и резко нажать передний тормоз.",
-                "Отпустить руль полностью, перенеся вес тела на заднее сиденье, и тормозить исключительно задним тормозом до полной остановки.",
-                "Начать активно совершать движения рулём влево-вправо в противофазе колебаниям, чтобы принудительно выровнять колесо относительно борозд."
-            ], c: 0,
-            e: "Продольные борозды срезанного асфальта заставляют переднее колесо совершать быстрые микродвижения влево-вправо. Конструктивная геометрия мотоцикла (вылет вилки) стремится к самостабилизации системы. <strong>Если водитель зажмёт руль силой рук (вариант 2), он превратится в жёсткий рычаг:</strong> колебания колеса передадутся на его торс, раскачают всю массу мотоцикла и приведут к потере управления («вобблингу»). Правильное действие — дать рулю свободу «дышать». Ровный газ разгружает переднюю вилку, а удержание бака ногами связывает центр массы водителя с рамой, стабилизируя траекторию."
+        { s: "При перестроении на загородном шоссе Ваш мотоцикл попадает на участок со снятым верхним слоем асфальта (продольные борозды). Руль начинает мелко вилять, создавая ощущение потери контроля.",
+          q: "Как правильно стабилизировать мотоцикл и продолжить движение?",
+          o: [
+            "Расслабить руки в локтях и кистях (не мешать рулю совершать его мелкие колебания), плотно сжать бак коленями, сохранять абсолютно ровный газ и смотреть далеко вперёд.",
+            "Вцепиться в руль максимальным усилием рук, чтобы жёстко погасить виляние переднего колеса, и резко нажать передний тормоз.",
+            "Отпустить руль полностью, перенеся вес тела на заднее сиденье, и тормозить исключительно задним тормозом до полной остановки.",
+            "Начать активно совершать движения рулём влево-вправо в противофазе колебаниям, чтобы принудительно выровнять колесо относительно борозд."
+          ], c: 0,
+          e: "Конструктивная геометрия мотоцикла стремится к самостабилизации системы. <strong>Если водитель зажмёт руль силой рук, он превратится в жёсткий рычаг:</strong> колебания колеса передадутся на его торс, раскачают всю массу мотоцикла и приведут к потере управления («вобблингу»). Правильное действие — дать рулю свободу «дышать»."
         },
-        {
-            s: "Вы находитесь в наклоне в повороте и на траектории замечаете нанос мелкого песка. Изменить направление движения невозможно, мотоцикл уже въезжает на скользкий участок.",
-            q: "Каковы Ваши правильные действия непосредственно в момент проезда песка?",
-            o: [
-                "Сохранять исходный угол наклона, удерживать ровный газ, расслабить руки на руле и смотреть на точку выхода из поворота.",
-                "Инстинктивно полностью закрыть ручку газа и плавно задействовать рычаг переднего тормоза.",
-                "Резко выпрямить мотоцикл импульсом руля и применить экстренное торможение всеми тормозами.",
-                "Кратковременно открыть газ на максимум, чтобы сорвать заднее колесо в управляемый дрифт."
-            ], c: 0,
-            e: "Поскольку изменить траекторию по условию задачи невозможно, <strong>любое торможение или сброс газа на песке мгновенно сорвёт шину в снос.</strong> Ровный газ сохраняет баланс развесовки подвески, расслабленные руки позволяют колесу самому скорректировать микроснос, а взгляд на выход из поворота стабилизирует движение."
+        { s: "Вы находитесь в наклоне в повороте и на траектории замечаете нанос мелкого песка. Изменить направление движения невозможно, мотоцикл уже въезжает на скользкий участок.",
+          q: "Каковы Ваши правильные действия непосредственно в момент проезда песка?",
+          o: [
+            "Сохранять исходный угол наклона, удерживать ровный газ, расслабить руки на руле и смотреть на точку выхода из поворота.",
+            "Инстинктивно полностью закрыть ручку газа и плавно задействовать рычаг переднего тормоза.",
+            "Резко выпрямить мотоцикл импульсом руля и применить экстренное торможение всеми тормозами.",
+            "Кратковременно открыть газ на максимум, чтобы сорвать заднее колесо в управляемый дрифт."
+          ], c: 0,
+          e: "Поскольку изменить траекторию по условию задачи невозможно, <strong>любое торможение или сброс газа на песке мгновенно сорвёт шину в снос.</strong> Ровный газ сохраняет баланс развесовки подвески, расслабленные руки позволяют колесу самому скорректировать микроснос, а взгляд на выход из поворота стабилизирует движение."
         },
-        {
-            s: "В дождливую погоду Вам необходимо замедлиться или скорректировать направление движения перед пешеходным переходом, на котором нанесена широкая пластиковая разметка, или расположен металлический люк.",
-            q: "Как правильно преодолеть этот участок?",
-            o: [
-                "Проехать разметку или люк «ходом»: полностью распустить тормоза, удерживать мотоцикл строго вертикально на ровном (нейтральном) газу, выполняя все манёвры и замедления строго ДО или ПОСЛЕ этого элемента.",
-                "Начать интенсивно тормозить передним тормозом непосредственно в момент нахождения колёс на белых полосах разметки, так как дорожный пластик имеет пористую структуру.",
-                "Полностью закрыть газ, выжать сцепление и активно маневрировать рулём прямо на мокром пластике, чтобы быстрее покинуть опасную зону.",
-                "Использовать исключительно задний тормоз, зажав его до полной блокировки колеса, чтобы пройти скользкий участок боком в контролируемом заносе."
-            ], c: 0,
-            e: "Мокрый дорожный пластик (разметка) и мокрый металл (люки, стыки мостов) по коэффициенту трения близки к гололёду. <strong>Любое продольное (торможение/разгон) или поперечное (наклон в повороте) усилие</strong> на этих элементах мгновенно сорвёт колесо в неизбежный снос. Правильное действие — разделить процесс изменения скорости/траектории и процесс проезда скользкого участка. Мотоцикл должен пересекать люк или разметку строго по прямой, без какого-либо ускорения или замедления."
+        { s: "В дождливую погоду Вам необходимо замедлиться или скорректировать направление движения перед пешеходным переходом, на котором нанесена широкая пластиковая разметка, или расположен металлический люк.",
+          q: "Как правильно преодолеть этот участок?",
+          o: [
+            "Проехать разметку или люк «ходом»: полностью распустить тормоза, удерживать мотоцикл строго вертикально на ровном (нейтральном) газу, выполняя все манёвры и замедления строго ДО или ПОСЛЕ этого элемента.",
+            "Начать интенсивно тормозить передним тормозом непосредственно в момент нахождения колёс на белых полосах разметки, так как дорожный пластик имеет пористую структуру.",
+            "Полностью закрыть газ, выжать сцепление и активно маневрировать рулём прямо на мокром пластике, чтобы быстрее покинуть опасную зону.",
+            "Использовать исключительно задний тормоз, зажав его до полной блокировки колеса, чтобы пройти скользкий участок боком в контролируемом заносе."
+          ], c: 0,
+          e: "Мокрый дорожный пластик (разметка) и мокрый металл (люки, стыки мостов) по коэффициенту трения близки к гололёду. <strong>Любое продольное (торможение/разгон) или поперечное (наклон в повороте) усилие</strong> на этих элементах мгновенно сорвёт колесо в неизбежный снос."
         },
-        {
-            s: "Вам необходимо перестроиться через трамвайные пути, которые идут попутно, но расположены под небольшим (острым) углом к Вашей полосе движения. На улице сухо.",
-            q: "Как безопасно преодолеть металлические рельсы?",
-            o: [
-                "Двигаться вдоль рельса, плавно наезжая на него боковой частью протектора шины под минимальным углом, сохраняя исходную скорость.",
-                "Зажать передний тормоз в момент, когда переднее колесо находится непосредственно на металлическом рельсе, чтобы зафиксировать направление вилки.",
-                "Заранее изменить траекторию (сделать микро-зигзаг), чтобы пересечь рельс под углом, максимально близким к 90 градусам (прямому). В момент переезда рельса не тормозить, не газовать и удерживать мотоцикл вертикально.",
-                "Сильно наклонить мотоцикл корпусом внутрь и проехать по металлу в глубоком наклоне, чтобы колёса быстрее проскочили препятствие."
-            ], c: 2,
-            e: "Если наезжать на рельс под острым углом, круглая в сечении мотоциклетная шина не сможет перешагнуть металлический кант рельса и соскользнёт по нему. Руль резко вывернет в сторону скольжения, что приведёт к мгновенному падению. Единственный безопасный способ — <strong>принудительно спрямить траекторию перед рельсами.</strong> Угол пересечения должен быть как можно ближе к 90°, чтобы колесо преодолело металл мгновенным перекатом. Какие-либо действия газом или тормозом на самом рельсе сорвут зацеп, поэтому пути проезжаются ровным ходом."
+        { s: "Вам необходимо перестроиться через трамвайные пути, которые идут попутно, но расположены под небольшим (острым) углом к Вашей полосе движения. На улице сухо.",
+          q: "Как безопасно преодолеть металлические рельсы?",
+          o: [
+            "Двигаться вдоль рельса, плавно наезжая на него боковой частью протектора шины под минимальным углом, сохраняя исходную скорость.",
+            "Зажать передний тормоз в момент, когда переднее колесо находится непосредственно на металлическом рельсе, чтобы зафиксировать направление вилки.",
+            "Заранее изменить траекторию (сделать микро-зигзаг), чтобы пересечь рельс под углом, максимально близким к 90 градусам (прямому). В момент переезда рельса не тормозить, не газовать и удерживать мотоцикл вертикально.",
+            "Сильно наклонить мотоцикл корпусом внутрь и проехать по металлу в глубоком наклоне, чтобы колёса быстрее проскочили препятствие."
+          ], c: 2,
+          e: "Если наезжать на рельс под острым углом, круглая в сечении мотоциклетная шина не сможет перешагнуть металлический кант рельса и соскользнёт по нему. Единственный безопасный способ — <strong>принудительно спрямить траекторию перед рельсами.</strong>"
         },
-        {
-            s: "Вам необходимо заехать на невысокий бордюр (поребрик) или переехать лежащий на проезжей части брус на минимальной скорости (около 5–10 км/ч).",
-            q: "Какова правильная техническая последовательность преодоления препятствия?",
-            o: [
-                "Направить мотоцикл под острым углом к бордюру, зажать передний тормоз и силой рук затолкнуть переднее колесо наверх.",
-                "Подойти к бордюру под прямым углом (90°). Перед самым контактом колеса с препятствием кратковременно приоткрыть газ (разгрузить вилку), привстать на подножках, перенеся вес тела чуть назад, и полностью закрыть газ в момент удара заднего колеса.",
-                "Максимально разогнаться и протаранить бордюр сидя в седле, крепко зажав руль прямыми руками.",
-                "Полностью выжать сцепление, катиться накатом под углом 45 градусов и интенсивно прыгать на сиденье в момент удара."
-            ], c: 1,
-            e: "Въезд под острым углом приведёт к тому, что колесо соскользнёт вдоль вертикальной плоскости бордюра и мотоцикл завалится. <strong>Манёвр выполняется только под углом 90 градусов.</strong> Если сидеть в седле, удар жёстко передастся на раму и позвоночник водителя, дестабилизируя баланс. Привставая на подножках, водитель превращает свои ноги в эффективные амортизаторы. <strong>Короткий импульс газа</strong> непосредственно перед препятствием поднимает нос мотоцикла (разгружает переднюю вилку), позволяя колесу мягко перешагнуть ступеньку. В момент, когда бордюр штурмует заднее колесо, газ закрывают во избежание пробуксовки."
+        { s: "Вам необходимо заехать на невысокий бордюр (поребрик) или переехать лежащий на проезжей части брус на минимальной скорости (около 5–10 км/ч).",
+          q: "Какова правильная техническая последовательность преодоления препятствия?",
+          o: [
+            "Направить мотоцикл под острым углом к бордюру, зажать передний тормоз и силой рук затолкнуть переднее колесо наверх.",
+            "Подойти к бордюру под прямым углом (90°). Перед самым контактом колеса с препятствием кратковременно приоткрыть газ (разгрузить вилку), привстать на подножках, перенеся вес тела чуть назад, и полностью закрыть газ в момент удара заднего колеса.",
+            "Максимально разогнаться и протаранить бордюр сидя в седле, крепко зажав руль прямыми руками.",
+            "Полностью выжать сцепление, катиться накатом под углом 45 градусов и интенсивно прыгать на сиденье в момент удара."
+          ], c: 1,
+          e: "Въезд под острым углом приведёт к тому, что колесо соскользнёт вдоль вертикальной плоскости бордюра. <strong>Манёвр выполняется только под углом 90 градусов.</strong> Привставая на подножках, водитель превращает свои ноги в эффективные амортизаторы."
         },
-        {
-            s: "Вы въезжаете на участок дороги, который полностью покрыт плотным слоем опавших листьев, асфальта под ними не видно.",
-            q: "Каковы особенности управления мотоциклом на данном покрытии?",
-            o: [
-                "Снизить скорость, минимизировать углы наклона мотоцикла, выполнять все торможения плавно и преимущественно задним тормозом, полностью избегая резких манёвров.",
-                "Опавшие листья не влияют на сцепление, если они сухие, поэтому допускается движение в обычном динамичном режиме с наклонами в поворотах.",
-                "Держать передний тормоз постоянно слегка зажатым («подсушивать колодки») и двигаться на повышенных оборотах двигателя.",
-                "Выставить обе ноги на асфальт в качестве опор и двигаться со скоростью 40 км/ч, активно виляя из стороны в сторону для очистки протектора."
-            ], c: 0,
-            e: "Ковёр из листьев опасен в любом состоянии: листья скользят друг относительно друга и относительно дорожного полотна, лишая шину жёсткой связи с асфальтом. Кроме того, под ними часто скрываются ямы, влага или открытые люки. <strong>Любой наклон мотоцикла на таком покрытии чреват мгновенным сносом колёс.</strong> Движение должно быть максимально настильным и пологим. Передний тормоз используется с экстремальной осторожностью, так как блокировка передка на листьях происходит мгновенно."
+        { s: "Вы въезжаете на участок дороги, который полностью покрыт плотным слоем опавших листьев, асфальта под ними не видно.",
+          q: "Каковы особенности управления мотоциклом на данном покрытии?",
+          o: [
+            "Снизить скорость, минимизировать углы наклона мотоцикла, выполнять все торможения плавно и преимущественно задним тормозом, полностью избегая резких манёвров.",
+            "Опавшие листья не влияют на сцепление, если они сухие, поэтому допускается движение в обычном динамичном режиме с наклонами в поворотах.",
+            "Держать передний тормоз постоянно слегка зажатым («подсушивать колодки») и двигаться на повышенных оборотах двигателя.",
+            "Выставить обе ноги на асфальт в качестве опор и двигаться со скоростью 40 км/ч, активно виляя из стороны в сторону для очистки протектора."
+          ], c: 0,
+          e: "Ковёр из листьев опасен в любом состоянии: листья скользят друг относительно друга и относительно дорожного полотна, лишая шину жёсткой связи с асфальтом. <strong>Любой наклон мотоцикла на таком покрытии чреват мгновенным сносом колёс.</strong>"
         },
-        {
-            s: "Вы двигаетесь по шоссе со скоростью 70 км/ч в сильный ливень и влетаете в глубокую протяжённую лужу. Тормозить уже поздно.",
-            q: "Что происходит с мотоциклом и какова правильная тактика действий?",
-            o: [
-                "Возникает эффект аквапланирования (всплытие шины). Нужно резко нажать передний тормоз, чтобы заставить колесо пробить водяной клин до асфальта.",
-                "Зафиксировать руль прямо, расслабить руки в локтях (давая подвеске отработать гидравлический удар о воду), сохранять абсолютно ровный газ и не задействовать тормозные системы до выезда из лужи.",
-                "Выжать сцепление, полностью закрыть газ и начать интенсивно крутить руль влево-вправо для удержания баланса в жидкой среде.",
-                "Резко открыть газ на максимум, чтобы за счёт динамического ускорения поднять переднее колесо в воздух («вилли») и пересечь лужу на заднем колесе."
-            ], c: 1,
-            e: "Плотность воды высока, и въезд в глубокую лужу на скорости вызывает мощный гидравлический удар, стремящийся резко замедлить мотоцикл (происходит клевок подвески). <strong>Если закрыть газ или применить торможение,</strong> перенос веса вперёд в сочетании с потерей сцепления (водяной клин) приведёт к мгновенной блокировке переднего колеса и падению. Ровный газ компенсирует тормозящую силу воды, а прямая траектория и расслабленные руки позволят мотоциклу стабилизироваться за счёт собственной геометрии и инерции."
+        { s: "Вы двигаетесь по шоссе со скоростью 70 км/ч в сильный ливень и влетаете в глубокую протяжённую лужу. Тормозить уже поздно.",
+          q: "Что происходит с мотоциклом и какова правильная тактика действий?",
+          o: [
+            "Возникает эффект аквапланирования (всплытие шины). Нужно резко нажать передний тормоз, чтобы заставить колесо пробить водяной клин до асфальта.",
+            "Зафиксировать руль прямо, расслабить руки в локтях (давая подвеске отработать гидравлический удар о воду), сохранять абсолютно ровный газ и не задействовать тормозные системы до выезда из лужи.",
+            "Выжать сцепление, полностью закрыть газ и начать интенсивно крутить руль влево-вправо для удержания баланса в жидкой среде.",
+            "Резко открыть газ на максимум, чтобы за счёт динамического ускорения поднять переднее колесо в воздух («вилли») и пересечь лужу на заднем колесе."
+          ], c: 1,
+          e: "Плотность воды высока, и въезд в глубокую лужу на скорости вызывает мощный гидравлический удар. <strong>Если закрыть газ или применить торможение,</strong> перенос веса вперёд в сочетании с потерей сцепления (водяной клин) приведёт к мгновенной блокировке переднего колеса и падению."
         },
-        {
-            s: "Вы выехали в центр перекрёстка на зелёный сигнал светофора и остановились, чтобы пропустить встречный поток. За встречными машинами идут пешеходы. Поток иссякает, Вам нужно завершить поворот.",
-            q: "Какова правильная тактика управления мотоциклом и распределения внимания?",
-            o: [
-                "Пока стоите и ждёте, держать руль уже повёрнутым налево. Как только встречные остановятся, резко открыть газ и быстро проскочить перед пешеходами.",
-                "Удерживать мотоцикл на первой передаче задним тормозом, переднее колесо и руль держать строго прямо. Начинать движение плавно (10–15 км/ч), контролируя зону перехода, будучи готовым при необходимости остановиться деликатным прижатием заднего тормоза.",
-                "Стоять на нейтральной передаче. При появлении просвета быстро включить первую передачу и пройти поворот на высокой скорости (40–50 км/ч) методом контрруления.",
-                "Выставить обе ноги на асфальт, катиться на полувыжатом сцеплении и смотреть исключительно под переднее колесо, чтобы не наехать на дорожную разметку."
-            ], c: 1,
-            e: "Критическая ошибка — выкручивать руль в сторону поворота во время ожидания (вариант 1). Если в этот момент сзади в мотоцикл въедет невнимательный автомобиль, <strong>удар выбросит Вас прямо под колёса движущегося встречного потока.</strong> Руль должен смотреть строго прямо до начала фактического манёвра. Медленный поворот налево опасен тем, что встречные машины закрывают обзор на пешеходный переход. Скорость должна быть минимальной, управление — в «серой зоне» сцепления. Если пешеход внезапно шагнёт на дорогу, нажимать передний тормоз в наклоне на малой скорости нельзя (произойдёт падение). Останавливать мотоцикл в такой ситуации нужно <strong>только аккуратным прижатием заднего тормоза.</strong>"
+        { s: "Вы выехали в центр перекрёстка на зелёный сигнал светофора и остановились, чтобы пропустить встречный поток. За встречными машинами идут пешеходы. Поток иссякает, Вам нужно завершить поворот.",
+          q: "Какова правильная тактика управления мотоциклом и распределения внимания?",
+          o: [
+            "Пока стоите и ждёте, держать руль уже повёрнутым налево. Как только встречные остановятся, резко открыть газ и быстро проскочить перед пешеходами.",
+            "Удерживать мотоцикл на первой передаче задним тормозом, переднее колесо и руль держать строго прямо. Начинать движение плавно (10–15 км/ч), контролируя зону перехода, будучи готовым при необходимости остановиться деликатным прижатием заднего тормоза.",
+            "Стоять на нейтральной передаче. При появлении просвета быстро включить первую передачу и пройти поворот на высокой скорости (40–50 км/ч) методом контрруления.",
+            "Выставить обе ноги на асфальт, катиться на полувыжатом сцеплении и смотреть исключительно под переднее колесо, чтобы не наехать на дорожную разметку."
+          ], c: 1,
+          e: "Критическая ошибка — выкручивать руль в сторону поворота во время ожидания. <strong>Удар выбросит Вас прямо под колёса движущегося встречного потока.</strong> Руль должен смотреть строго прямо до начала фактического манёвра."
         },
-        {
-            s: "Вы двигаетесь по асфальтированной загородной трассе в сильный дождь. В полосе Вашего движения от колёс грузовых автомобилей образовалась глубокая продольная колея, заполненная водой.",
-            q: "Какую траекторию внутри полосы безопаснее всего выбрать для движения?",
-            o: [
-                "Двигаться строго по центру полосы, не обращая внимания на колею — шина сама найдёт ровную поверхность.",
-                "Двигаться по гребню колеи (между углублениями) или сместиться к краям полосы, полностью избегая движения внутри заполненных водой углублений.",
-                "Двигаться непосредственно внутри правого или левого углубления колеи, так как вода в них смывает дорожную пыль и улучшает сцепление.",
-                "Периодически перестраиваться из левого углубления колеи в правое («змейкой») для очистки протектора шин от водяного клина."
-            ], c: 1,
-            e: "Углубления колеи во время дождя превращаются в скрытые резервуары с водой. <strong>Движение внутри них на мотоцикле гарантирует мгновенное возникновение аквапланирования и потерю управления.</strong> Кроме того, именно на дне колеи скапливается несмываемая масляная плёнка от автомобильного трафика. Самая безопасная траектория — движение по сухим возвышенным участкам (между углублениями) или смещение в левую/правую треть полосы вне зоны колеи."
+        { s: "Вы двигаетесь по асфальтированной загородной трассе в сильный дождь. В полосе Вашего движения от колёс грузовых автомобилей образовалась глубокая продольная колея, заполненная водой.",
+          q: "Какую траекторию внутри полосы безопаснее всего выбрать для движения?",
+          o: [
+            "Двигаться строго по центру полосы, не обращая внимания на колею — шина сама найдёт ровную поверхность.",
+            "Двигаться по гребню колеи (между углублениями) или сместиться к краям полосы, полностью избегая движения внутри заполненных водой углублений.",
+            "Двигаться непосредственно внутри правого или левого углубления колеи, так как вода в них смывает дорожную пыль и улучшает сцепление.",
+            "Периодически перестраиваться из левого углубления колеи в правое («змейкой») для очистки протектора шин от водяного клина."
+          ], c: 1,
+          e: "Углубления колеи во время дождя превращаются в скрытые резервуары с водой. <strong>Движение внутри них на мотоцикле гарантирует мгновенное возникновение аквапланирования и потерю управления.</strong> Самая безопасная траектория — движение по сухим возвышенным участкам (между углублениями) или смещение в левую/правую треть полосы вне зоны колеи."
         },
-        {
-            s: "Вы едете по многополосной городской улице. Автомобильный поток движется плотно и со стабильной скоростью 60 км/ч.",
-            q: "Какую скорость безопаснее всего выбрать Вам на мотоцикле?",
-            o: [
-                "Двигаться строго со скоростью потока (60 км/ч), заняв место ровно по центру полосы за впереди идущим автомобилем.",
-                "Двигаться со скоростью чуть выше скорости потока — примерно на 10–15 км/ч быстрее машин (70–75 км/ч), постоянно совершая контролируемое опережение.",
-                "Двигаться со скоростью значительно ниже потока (около 45–50 км/ч), чтобы иметь больше времени на реакцию и не приближаться к машинам.",
-                "Периодически резко разгоняться до 100 км/ч, а затем полностью закрывать газ и катиться накатом для экономии ресурса колодок."
-            ], c: 1,
-            e: "Это базовое правило защитного вождения. Если двигаться медленнее потока (вариант 3), Вас начнут обгонять автомобили, водители которых часто не замечают мотоциклиста в зеркалах и будут перестраиваться прямо в Вас. Если ехать со скоростью потока (вариант 1), Вы визуально растворяетесь для окружающих, зависаете в чужих слепых зонах и полностью зависите от действий машины впереди. <strong>Движение чуть быстрее потока (на 10–15 км/ч) делает Вас активным элементом трафика:</strong> Вы сами контролируете ситуацию, водители впереди видят Ваше сближение в зеркалах, и Вы быстро покидаете опасные мёртвые зоны."
+        { s: "Вы едете по многополосной городской улице. Автомобильный поток движется плотно и со стабильной скоростью 60 км/ч.",
+          q: "Какую скорость безопаснее всего выбрать Вам на мотоцикле?",
+          o: [
+            "Двигаться строго со скоростью потока (60 км/ч), заняв место ровно по центру полосы за впереди идущим автомобилем.",
+            "Двигаться со скоростью чуть выше скорости потока — примерно на 10–15 км/ч быстрее машин (70–75 км/ч), постоянно совершая контролируемое опережение.",
+            "Двигаться со скоростью значительно ниже потока (около 45–50 км/ч), чтобы иметь больше времени на реакцию и не приближаться к машинам.",
+            "Периодически резко разгоняться до 100 км/ч, а затем полностью закрывать газ и катиться накатом для экономии ресурса колодок."
+          ], c: 1,
+          e: "Это базовое правило защитного вождения. Если двигаться медленнее потока, Вас начнут обгонять автомобили, водители которых часто не замечают мотоциклиста в зеркалах. Если ехать со скоростью потока, Вы визуально растворяетесь для окружающих. <strong>Движение чуть быстрее потока (на 10–15 км/ч) делает Вас активным элементом трафика.</strong>"
         },
-        {
-            s: "Вы едете по загородной однополосной дороге (по одной полосе в каждую сторону). Полоса достаточно широкая.",
-            q: "В какой части своей полосы правильнее и безопаснее всего расположить мотоцикл?",
-            o: [
-                "Строго по центру полосы, прямо по осевой линии траектории движения автомобилей.",
-                "Максимально прижаться к правому краю, практически на линию разметки обочины, чтобы вообще не занимать полосу движения.",
-                "В левой или правой трети полосы (по колее левого или правого колеса автомобиля), в зависимости от обстановки. Центральную часть полосы необходимо полностью избегать.",
-                "Постоянно динамически перестраиваться из левой части полосы в правую (ехать «змейкой»), чтобы привлекать к себе внимание."
-            ], c: 2,
-            e: "Центр полосы — самая загрязнённая и опасная зона проезжей части. Именно туда из проезжающих автомобилей капает масло, антифриз и сыплется техническая грязь. В дождь или при экстренном торможении этот масляный налёт превращается в каток. Двигаясь по колее колёс (левой или правой), Вы: 1) видите дорожную обстановку дальше вперёд через габариты идущей впереди машины; 2) сами становитесь заметнее в зеркалах водителя впереди; 3) защищаете свою полосу, не позволяя автомобилям протиснуться мимо Вас без полноценного перестроения. Левая колея обычно предпочтительнее, так как делает Вас заметным для встречных машин, собирающихся повернуть налево."
+        { s: "Вы едете по загородной однополосной дороге (по одной полосе в каждую сторону). Полоса достаточно широкая.",
+          q: "В какой части своей полосы правильнее и безопаснее всего расположить мотоцикл?",
+          o: [
+            "Строго по центру полосы, прямо по осевой линии траектории движения автомобилей.",
+            "Максимально прижаться к правому краю, практически на линию разметки обочины, чтобы вообще не занимать полосу движения.",
+            "В левой или правой трети полосы (по колее левого или правого колеса автомобиля), в зависимости от обстановки. Центральную часть полосы необходимо полностью избегать.",
+            "Постоянно динамически перестраиваться из левой части полосы в правую (ехать «змейкой»), чтобы привлекать к себе внимание."
+          ], c: 2,
+          e: "Центр полосы — самая загрязнённая и опасная зона проезжей части. Именно туда из проезжающих автомобилей капает масло, антифриз и сыплется техническая грязь. Двигаясь по колее колёс (левой или правой), Вы лучше видите обстановку и защищаете свою полосу."
         },
-        {
-            s: "Вы выехали на скоростную кольцевую автодорогу. Скорость потока высокая (110–130 км/ч), много большегрузного транспорта, на открытых участках присутствует боковой ветер.",
-            q: "Каковы ключевые правила безопасного пилотирования мотоцикла в этих условиях?",
-            o: [
-                "Занять крайнюю правую полосу и двигаться вплотную за грузовиками, чтобы они защищали твой мотоцикл от встречного ветра.",
-                "Увеличить дистанцию до впереди идущего транспорта минимум до 3–4 секунд, расслабить руки на руле (для гашения воздушных ударов от фур), сместить корпус чуть вперёд и вниз, избегать движения вплотную к разделительным барьерам.",
-                "Двигаться по технологической полосе (обочине) на максимальной скорости, так как там нет автомобилей.",
-                "Крепко, до судорог в кистях вцепиться в руль, чтобы мотоцикл не сдувало ветром, и прерывисто тормозить перед каждым грузовиком."
-            ], c: 1,
-            e: "На высоких скоростях инерция возрастает кратно. <strong>Дистанция в 3–4 секунды</strong> необходима, так как тормозной путь мотоцикла на высокой скорости часто длиннее, чем у современного автомобиля. Большегрузы создают мощные зоны завихрений: при их опережении мотоцикл сначала прижимает к грузовику, а при выезде вперёд — толкает боковым ветром. <strong>Руки должны быть расслаблены,</strong> чтобы эти воздушные толчки не передавались на руль в виде опасных колебаний. У барьеров и краёв дорог скапливается весь дорожный мусор (болты, куски корда от шин) — езда там гарантирует прокол или потерю зацепа."
+        { s: "Вы выехали на скоростную кольцевую автодорогу. Скорость потока высокая (110–130 км/ч), много большегрузного транспорта, на открытых участках присутствует боковой ветер.",
+          q: "Каковы ключевые правила безопасного пилотирования мотоцикла в этих условиях?",
+          o: [
+            "Занять крайнюю правую полосу и двигаться вплотную за грузовиками, чтобы они защищали твой мотоцикл от встречного ветра.",
+            "Увеличить дистанцию до впереди идущего транспорта минимум до 3–4 секунд, расслабить руки на руле (для гашения воздушных ударов от фур), сместить корпус чуть вперёд и вниз, избегать движения вплотную к разделительным барьерам.",
+            "Двигаться по технологической полосе (обочине) на максимальной скорости, так как там нет автомобилей.",
+            "Крепко, до судорог в кистях вцепиться в руль, чтобы мотоцикл не сдувало ветром, и прерывисто тормозить перед каждым грузовиком."
+          ], c: 1,
+          e: "На высоких скоростях инерция возрастает кратно. <strong>Дистанция в 3–4 секунды</strong> необходима, так как тормозной путь мотоцикла на высокой скорости часто длиннее, чем у современного автомобиля. <strong>Руки должны быть расслаблены,</strong> чтобы воздушные толчки от фур не передавались на руль в виде опасных колебаний."
         },
-        {
-            s: "Вы двигаетесь по многополосной улице в плотном потоке. Сбоку от Вас идёт крупный автобус или фура. Поток начинает замедляться.",
-            q: "Какая позиция относительно большегруза является наиболее опасной и как правильно действовать?",
-            o: [
-                "Двигаться параллельно кабине грузовика справа от него — там водитель видит Вас лучше всего через боковое стекло.",
-                "Находиться параллельно центральной или задней части кузова грузовика чуть позади его кабины. Безопаснее всего быстрым импульсом газа опередить его либо полностью отстать, увеличив дистанцию.",
-                "Прижаться вплотную к борту грузовика непосредственно под его правым зеркалом заднего вида, чтобы спрятаться от воздушного потока.",
-                "Двигаться строго по центру полосы прямо перед бампером грузовика на расстоянии одного метра, чтобы водитель ориентировался по Вашему шлему."
-            ], c: 1,
-            e: "У грузовиков и автобусов огромные слепые (мёртвые) зоны. <strong>Самая опасная зона — справа и слева чуть позади кабины.</strong> Водитель физически не видит там мотоцикл ни в одно зеркало. Если ему понадобится резко перестроиться или объехать препятствие, он начнёт манёвр прямо в Вас. Находиться в этой зоне параллельно длинномерному транспорту дольше 2–3 секунд смертельно опасно. Правило простое: либо Вы опережаете грузовик на свободное пространство, либо притормаживаете и остаётесь позади него на безопасной дистанции."
+        { s: "Вы двигаетесь по многополосной улице в плотном потоке. Сбоку от Вас идёт крупный автобус или фура. Поток начинает замедляться.",
+          q: "Какая позиция относительно большегруза является наиболее опасной и как правильно действовать?",
+          o: [
+            "Двигаться параллельно кабине грузовика справа от него — там водитель видит Вас лучше всего через боковое стекло.",
+            "Находиться параллельно центральной или задней части кузова грузовика чуть позади его кабины. Безопаснее всего быстрым импульсом газа опередить его либо полностью отстать, увеличив дистанцию.",
+            "Прижаться вплотную к борту грузовика непосредственно под его правым зеркалом заднего вида, чтобы спрятаться от воздушного потока.",
+            "Двигаться строго по центру полосы прямо перед бампером грузовика на расстоянии одного метра, чтобы водитель ориентировался по Вашему шлему."
+          ], c: 1,
+          e: "У грузовиков и автобусов огромные слепые (мёртвые) зоны. <strong>Самая опасная зона — справа и слева чуть позади кабины.</strong> Водитель физически не видит там мотоцикл ни в одно зеркало. Находиться в этой зоне параллельно длинномерному транспорту дольше 2–3 секунд смертельно опасно."
         },
-        {
-            s: "Вы едете по главной дороге со скоростью 50 км/ч. Впереди справа со двора медленно выкатывается автомобиль, которому нужно повернуть налево. Водитель смотрит в Вашу сторону.",
-            q: "Твои правильные действия для обеспечения собственной безопасности?",
-            o: [
-                "Раз водитель смотрит на меня, значит, он меня видит. Скорость менять не нужно, приоритет движения на моей стороне.",
-                "Максимально ускориться, чтобы успеть проскочить перекрёсток до того, как автомобиль выедет на Вашу полосу.",
-                "Снизить скорость (сбросить газ), перенести пальцы правой руки на рычаг переднего тормоза (выбрать свободный ход рычага), сместиться внутри полосы левее (подальше от выезда) и внимательно следить за передними колёсами машины, будучи готовым к экстренному торможению.",
-                "Включить дальний свет, начать непрерывно сигналить и резко зажать задний тормоз, пустив мотоцикл боком."
-            ], c: 2,
-            e: "Это классическая ловушка <strong>«Смотрел, но не увидел»</strong>. Человеческий мозг автомобилиста в трафике подсознательно ищет глазами крупные объекты (силуэты машин). Одиночный силуэт мотоциклиста мозг часто игнорирует или неверно оценивает скорость его приближения. Машина может поехать в любой момент. Смещение левее увеличивает боковой интервал и даёт лишнее время на манёвр. Перенос пальцев на рычаг тормоза (выбор свободного хода) сокращает время срабатывания тормозной системы на 0,2–0,3 секунды — на скорости 50 км/ч это спасёт несколько метров тормозного пути. <strong>Индикатором начала движения машины всегда являются её передние колёса</strong> — их вращение заметно раньше, чем сдвинется сам кузов."
+        { s: "Вы едете по главной дороге со скоростью 50 км/ч. Впереди справа со двора медленно выкатывается автомобиль, которому нужно повернуть налево. Водитель смотрит в Вашу сторону.",
+          q: "Твои правильные действия для обеспечения собственной безопасности?",
+          o: [
+            "Раз водитель смотрит на меня, значит, он меня видит. Скорость менять не нужно, приоритет движения на моей стороне.",
+            "Максимально ускориться, чтобы успеть проскочить перекрёсток до того, как автомобиль выедет на Вашу полосу.",
+            "Снизить скорость (сбросить газ), перенести пальцы правой руки на рычаг переднего тормоза (выбрать свободный ход рычага), сместиться внутри полосы левее (подальше от выезда) и внимательно следить за передними колёсами машины, будучи готовым к экстренному торможению.",
+            "Включить дальний свет, начать непрерывно сигналить и резко зажать задний тормоз, пустив мотоцикл боком."
+          ], c: 2,
+          e: "Это классическая ловушка <strong>«Смотрел, но не увидел»</strong>. Мозг автомобилиста подсознательно ищет глазами крупные объекты. Одиночный силуэт мотоциклиста часто игнорируется или неверно оценивается по скорости. <strong>Индикатором начала движения машины всегда являются её передние колёса.</strong>"
         },
-        {
-            s: "Вы стоите первым на перекрёстке у стоп-линии. Загорается зелёный сигнал светофора.",
-            q: "Каков правильный и безопасный алгоритм Вашего старта?",
-            o: [
-                "Мгновенно открыть газ на максимум и сорваться с места быстрее всех автомобилей, чтобы сразу занять свободное пространство впереди.",
-                "Начать движение плавно, но перед выездом на сам перекрёсток обязательно повернуть голову влево и вправо, убедившись, что по пересекаемой улице никто не завершает проезд на высокой скорости.",
-                "Подождать, пока все машины слева и справа от Вас поедут вперёд, и двигаться строго между их бортами, используя их как живой щит.",
-                "Начать движение на полувыжатом сцеплении назад, чтобы убедиться в отсутствии отката, а затем интенсивно ускоряться."
-            ], c: 1,
-            e: "Мотоцикл разгоняется значительно быстрее большинства гражданских автомобилей. Если стартовать вслепую сразу в секунду включения зелёного сигнала, Вы рискуете поймать тяжёлый боковой удар от лихача или грузовика, который «долетает» перекрёсток на высокой скорости по пересекаемой улице на сменяющийся сигнал. Поэтому <strong>зелёный свет — это лишь разрешение начать движение, но не гарантия безопасности.</strong> Сначала короткий взгляд по сторонам (убедиться, что колёса машин на пересекаемой трассе физически остановились), и только потом динамичный выезд."
+        { s: "Вы стоите первым на перекрёстке у стоп-линии. Загорается зелёный сигнал светофора.",
+          q: "Каков правильный и безопасный алгоритм Вашего старта?",
+          o: [
+            "Мгновенно открыть газ на максимум и сорваться с места быстрее всех автомобилей, чтобы сразу занять свободное пространство впереди.",
+            "Начать движение плавно, но перед выездом на сам перекрёсток обязательно повернуть голову влево и вправо, убедившись, что по пересекаемой улице никто не завершает проезд на высокой скорости.",
+            "Подождать, пока все машины слева и справа от Вас поедут вперёд, и двигаться строго между их бортами, используя их как живой щит.",
+            "Начать движение на полувыжатом сцеплении назад, чтобы убедиться в отсутствии отката, а затем интенсивно ускоряться."
+          ], c: 1,
+          e: "Мотоцикл разгоняется значительно быстрее большинства гражданских автомобилей. Поэтому <strong>зелёный свет — это лишь разрешение начать движение, но не гарантия безопасности.</strong> Сначала короткий взгляд по сторонам, и только потом динамичный выезд."
         },
-        {
-            s: "Вы подъезжаете к светофору, где уже стоят машины. Вам нужно остановиться за последним автомобилем в полосе движения. Сзади Вас едут другие транспортные средства.",
-            q: "Как правильно расположить мотоцикл и какие действия предпринять во время ожидания?",
-            o: [
-                "Остановиться ровно по центру за задним бампером машины, выключить передачу на нейтраль, отпустить руль и расслабить руки.",
-                "Остановиться у левого или правого края бампера впереди идущей машины (нацелив мотоцикл в промежуток между рядами), удерживать выжатым сцепление и включённую первую передачу, контролировать зеркала заднего вида и периодически нажимать на тормоз, чтобы мигал стоп-сигнал.",
-                "Упереться передним колесом прямо в бампер автомобиля, чтобы сзади идущие водители видели чёткую границу Вашей остановки.",
-                "Заглушить двигатель, выставить боковую подножку и встать рядом с мотоциклом на асфальт."
-            ], c: 1,
-            e: "Мотоциклисты крайне уязвимы при ударе сзади, когда невнимательный водитель автомобиля совершает наезд на стоящий транспорт. <strong>Если стоять по центру полосы (вариант 1), Вас зажмёт между двумя кузовами.</strong> Позиция у края бампера (с направлением колеса в междурядье) оставляет путь спасения: если Вы увидите в зеркале опасность, Вы просто откроете газ и уедете в межряд. Включённая первая передача удерживает мотоцикл в секундной готовности к рывку. <strong>Помигивание стоп-сигналом</strong> привлекает внимание водителей сзади гораздо эффективнее. Оставаться в этой готовности нужно до тех пор, пока сзади Вас не остановятся как минимум два автомобиля, создав физический щит."
+        { s: "Вы подъезжаете к светофору, где уже стоят машины. Вам нужно остановиться за последним автомобилем в полосе движения. Сзади Вас едут другие транспортные средства.",
+          q: "Как правильно расположить мотоцикл и какие действия предпринять во время ожидания?",
+          o: [
+            "Остановиться ровно по центру за задним бампером машины, выключить передачу на нейтраль, отпустить руль и расслабить руки.",
+            "Остановиться у левого или правого края бампера впереди идущей машины (нацелив мотоцикл в промежуток между рядами), удерживать выжатым сцепление и включённую первую передачу, контролировать зеркала заднего вида и периодически нажимать на тормоз, чтобы мигал стоп-сигнал.",
+            "Упереться передним колесом прямо в бампер автомобиля, чтобы сзади идущие водители видели чёткую границу Вашей остановки.",
+            "Заглушить двигатель, выставить боковую подножку и встать рядом с мотоциклом на асфальт."
+          ], c: 1,
+          e: "Мотоциклисты крайне уязвимы при ударе сзади. <strong>Если стоять по центру полосы, Вас зажмёт между двумя кузовами.</strong> Позиция у края бампера (с направлением колеса в междурядье) оставляет путь спасения."
         },
-        {
-            s: "Вы двигаетесь со скоростью 50 км/ч с пассажиром на заднем сиденье. Возникает необходимость экстренно остановить мотоцикл по прямой.",
-            q: "Как меняется динамика торможения и физика поведения мотоцикла по сравнению с одиночной ездой?",
-            o: [
-                "Тормозной путь никак не меняется, так как энергоёмкость подвески мотоцикла автоматически нивелирует любой дополнительный вес.",
-                "Тормозной путь значительно увеличивается; при этом эффективность заднего тормоза возрастает (из-за сильного прижима заднего колеса весом пассажира), а пассажир наваливается на водителя — водителю нужно упереться ногами в бак, оставив руки расслабленными.",
-                "Мотоцикл при торможении с пассажиром вообще невозможно замедлить передним тормозом, необходимо использовать только торможение двигателем.",
-                "Пассажир в момент торможения должен резко откинуться назад и выставить ноги в стороны, чтобы создать дополнительное аэродинамическое сопротивление."
-            ], c: 1,
-            e: "Дополнительный вес пассажира увеличивает общую инерцию системы — <strong>тормозной путь вырастет в любом случае</strong>, это закон физики. Но меняется развесовка: заднее колесо теперь сильно нагружено весом «двойки», поэтому оно не так легко уходит в юз, как при одиночной езде. <strong>Задний тормоз здесь становится гораздо более эффективным.</strong> Главная проблема — при резком замедлении пассажир смещается вперёд и наваливается на Вас. Его масса через Ваш торс передаётся на руль. Если руки будут жёстко заблокированы в локтях, этот импульс дестабилизирует рулевое управление. Задача водителя — плотно упереться коленями в бак, удерживая массу тела мышцами ног и кора, оставляя локти согнутыми и расслабленными для точного контроля рычага переднего тормоза."
+        { s: "Вы двигаетесь со скоростью 50 км/ч с пассажиром на заднем сиденье. Возникает необходимость экстренно остановить мотоцикл по прямой.",
+          q: "Как меняется динамика торможения и физика поведения мотоцикла по сравнению с одиночной ездой?",
+          o: [
+            "Тормозной путь никак не меняется, так как энергоёмкость подвески мотоцикла автоматически нивелирует любой дополнительный вес.",
+            "Тормозной путь значительно увеличивается; при этом эффективность заднего тормоза возрастает (из-за сильного прижима заднего колеса весом пассажира), а пассажир наваливается на водителя — водителю нужно упереться ногами в бак, оставив руки расслабленными.",
+            "Мотоцикл при торможении с пассажиром вообще невозможно замедлить передним тормозом, необходимо использовать только торможение двигателем.",
+            "Пассажир в момент торможения должен резко откинуться назад и выставить ноги в стороны, чтобы создать дополнительное аэродинамическое сопротивление."
+          ], c: 1,
+          e: "Дополнительный вес пассажира увеличивает общую инерцию системы — <strong>тормозной путь вырастет в любом случае.</strong> Заднее колесо теперь сильно нагружено весом «двойки», поэтому <strong>задний тормоз здесь становится гораздо более эффективным.</strong>"
         }
     ];
 
+    const TOTAL = data.length;
     let currentIdx = 0;
     let score = 0;
     let wrongCount = 0;
     let isAnswered = false;
+    const answers = new Array(TOTAL).fill(null);
     const startTime = Date.now();
 
     setInterval(() => {
         const s = Math.floor((Date.now() - startTime) / 1000);
         const el = document.getElementById('timer-text');
-        if (el) {
-            el.textContent =
-                `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
-        }
+        if (el) el.textContent = `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
     }, 1000);
 
+    function renderNav() {
+        const nav = document.getElementById('q-nav');
+        let html = '';
+        for (let i = 0; i < TOTAL; i++) {
+            let cls = 'q-nav-item';
+            if (i === currentIdx) cls += ' current';
+            if (answers[i] !== null) {
+                cls += answers[i] === 'correct' ? ' answered-correct' : ' answered-wrong';
+            }
+            if (i > currentIdx && answers[i] === null) cls += ' disabled';
+            html += `<div class="${cls}" onclick="jumpTo(${i})">${i+1}</div>`;
+        }
+        nav.innerHTML = html;
+    }
+
+    function jumpTo(idx) {
+        if (idx === currentIdx) return;
+        if (idx > currentIdx && answers[idx] === null) return;
+        currentIdx = idx;
+        renderQuestion();
+        renderNav();
+    }
+
     function renderQuestion() {
-        isAnswered = false;
-        document.getElementById('next-btn')?.remove();
-        document.getElementById('progress-text').textContent = `${currentIdx + 1} / ${data.length}`;
-        document.getElementById('p-bar').style.width = `${(currentIdx / data.length) * 100}%`;
+        isAnswered = answers[currentIdx] !== null;
+        document.getElementById('progress-text').textContent = `${currentIdx + 1} / ${TOTAL}`;
+        document.getElementById('score-text').textContent = score;
+        document.getElementById('wrong-text').textContent = wrongCount;
 
         const item = data[currentIdx];
         const root = document.getElementById('quiz-root');
 
         let html = `<div class="q-card">
             <span class="q-num">Вопрос ${currentIdx + 1}</span>
-            <div class="q-text">${item.q}</div>
+            <img class="q-image" src="${currentIdx + 1}.jpg" alt="Схема к вопросу ${currentIdx + 1}" loading="lazy" onerror="this.style.background='#e5e7eb';this.alt='Картинка не найдена: ${currentIdx + 1}.jpg'">
             <div class="q-situation">
                 <span class="s-label">Ситуация</span>
                 ${item.s}
             </div>
+            <div class="q-text">${item.q}</div>
             <div class="options-list">`;
+
+        const letters = ['1','2','3','4'];
         item.o.forEach((opt, oIdx) => {
-            html += `<label class="opt-label" id="opt-${oIdx}" onclick="selectOption(${oIdx})">
-                <span class="checkmark"></span>
+            let cls = 'opt-label';
+            if (isAnswered) {
+                cls += ' locked';
+                if (oIdx === item.c) cls += ' opt-correct';
+                if (oIdx === answers[currentIdx].chosen && oIdx !== item.c) cls += ' opt-wrong';
+            }
+            html += `<div class="${cls}" id="opt-${oIdx}" onclick="selectOption(${oIdx})">
+                <span class="opt-num">${letters[oIdx]}</span>
                 <span class="opt-text">${opt}</span>
-            </label>`;
+            </div>`;
         });
+
         html += `</div>
-            <div class="exp-box" id="exp-box">
+            <div class="exp-box ${isAnswered ? 'show' : ''}" id="exp-box">
                 <span class="exp-title">Разбор</span>
                 ${item.e}
+            </div>
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" onclick="goPrev()" ${currentIdx === 0 ? 'disabled' : ''}>← Назад</button>
+                <button class="btn btn-primary" onclick="goNext()" id="btn-next">
+                    ${currentIdx === TOTAL - 1 ? 'Завершить тест' : (isAnswered ? 'Далее →' : 'Ответьте, чтобы продолжить')}
+                </button>
             </div>
         </div>`;
 
         root.innerHTML = html;
-
-        const btn = document.createElement('button');
-        btn.className = 'btn-next';
-        btn.id = 'next-btn';
-        btn.textContent = (currentIdx === data.length - 1)
-            ? 'Завершить тест'
-            : 'Следующий вопрос →';
-        btn.addEventListener('click', nextQuestion);
-        root.appendChild(btn);
+        updateNextBtn();
     }
 
     function selectOption(userAns) {
@@ -773,68 +819,83 @@
 
         document.querySelectorAll('.opt-label').forEach((label, oIdx) => {
             label.classList.add('locked');
-            if (oIdx === item.c) {
-                label.classList.add('opt-correct');
-            }
+            if (oIdx === item.c) label.classList.add('opt-correct');
         });
 
         if (userAns === item.c) {
             score++;
+            answers[currentIdx] = { result: 'correct', chosen: userAns };
         } else {
             wrongCount++;
             document.getElementById(`opt-${userAns}`).classList.add('opt-wrong');
+            answers[currentIdx] = { result: 'wrong', chosen: userAns };
         }
 
         document.getElementById('score-text').textContent = score;
         document.getElementById('wrong-text').textContent = wrongCount;
-
-        const btn = document.getElementById('next-btn');
-        if (btn) btn.classList.add('show');
+        updateNextBtn();
+        renderNav();
     }
 
-    function nextQuestion() {
-        if (currentIdx < data.length - 1) {
+    function updateNextBtn() {
+        const btn = document.getElementById('btn-next');
+        if (!btn) return;
+        btn.disabled = !isAnswered;
+        btn.textContent = currentIdx === TOTAL - 1
+            ? (isAnswered ? 'Завершить тест' : 'Ответьте, чтобы завершить')
+            : (isAnswered ? 'Далее →' : 'Ответьте, чтобы продолжить');
+    }
+
+    function goPrev() {
+        if (currentIdx > 0) {
+            currentIdx--;
+            renderQuestion();
+            renderNav();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }
+
+    function goNext() {
+        if (!isAnswered) return;
+        if (currentIdx < TOTAL - 1) {
             currentIdx++;
             renderQuestion();
+            renderNav();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
             finishQuiz();
         }
     }
 
     function finishQuiz() {
-        document.getElementById('p-bar').style.width = '100%';
+        document.getElementById('q-nav').style.display = 'none';
         document.getElementById('stats-panel').style.display = 'none';
-
-        const total = data.length;
-        const pct = Math.round((score / total) * 100);
+        const pct = Math.round((score / TOTAL) * 100);
 
         let rank = '';
-        if (score === total) {
-            rank = 'Идеально. Ни одной ошибки — ты уже знаешь этот материал лучше, чем билеты.';
-        } else if (pct >= 85) {
-            rank = 'Отличный результат. База отличная, сложные ловушки ты тоже видишь.';
-        } else if (pct >= 60) {
-            rank = 'Основу понимаешь, но в отдельных ситуациях ещё есть, что перечитать. Вернись к разборам ошибочных вопросов.';
-        } else {
-            rank = 'Пока слабо. Материал стоит разобрать заново, а не просто перечитать билеты.';
-        }
+        if (score === TOTAL) rank = 'Идеально. Ни одной ошибки — ты уже знаешь этот материал лучше, чем билеты.';
+        else if (pct >= 85) rank = 'Отличный результат. База отличная, сложные ловушки ты тоже видишь.';
+        else if (pct >= 60) rank = 'Основу понимаешь, но в отдельных ситуациях ещё есть что перечитать. Вернись к разборам ошибочных вопросов.';
+        else rank = 'Пока слабо. Материал стоит разобрать заново, а не просто перечитать билеты.';
 
         const root = document.getElementById('quiz-root');
         const scoreClass = pct >= 85 ? 'good' : (pct >= 60 ? '' : 'bad');
         root.innerHTML = `
             <div class="result-screen">
                 <h2>Тест завершён</h2>
-                <div class="result-score ${scoreClass}">${score} / ${total}</div>
+                <div class="result-score ${scoreClass}">${score} / ${TOTAL}</div>
                 <div class="result-detail">Правильных: <b>${score}</b> · Ошибок: <b>${wrongCount}</b> · Точность: <b>${pct}%</b></div>
                 <div class="result-rank">${rank}</div>
                 <div class="result-actions">
                     <button class="btn btn-secondary" onclick="location.reload()">Пройти заново</button>
-                    <a class="btn btn-primary" href="https://www.youtube.com/@IlyaBikeSPb/" target="_blank" rel="noopener" style="text-decoration:none; display:inline-block;">Подписаться на канал</a>
+                    <a class="btn btn-primary" href="https://youtube.com/@IlyaBikeSPb" target="_blank" rel="noopener" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">Подписаться на канал</a>
                 </div>
             </div>
         `;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    renderNav();
     renderQuestion();
 </script>
 </body>
