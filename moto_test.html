@@ -55,67 +55,56 @@
     }
     .container { max-width: 900px; width: 100%; margin: 0 auto; flex: 1; display: flex; flex-direction: column; }
 
-    /* ---------- Шапка ---------- */
+    /* ---------- Шапка-баннер ---------- */
     .brand {
-        display: flex; align-items: flex-start; justify-content: space-between; gap: 24px;
-        padding-bottom: 24px;
-        margin-bottom: 22px;
+        display: flex; align-items: flex-start; gap: 26px;
+        padding-bottom: 26px;
+        margin-bottom: 24px;
         border-bottom: 1px solid var(--border);
         flex-wrap: wrap;
     }
-    .brand-left { display: flex; align-items: flex-start; gap: 20px; flex: 1; min-width: 260px; }
     .brand-avatar {
-        width: 96px; height: 96px;
+        width: 130px; height: 130px;
         border-radius: 50%;
         flex-shrink: 0;
         object-fit: cover;
-        box-shadow: 0 0 0 3px var(--card), 0 0 0 4px var(--border-strong), 0 4px 12px rgba(0,0,0,0.08);
+        box-shadow: 0 0 0 3px var(--card), 0 0 0 4px var(--border-strong), 0 6px 18px rgba(0,0,0,0.10);
     }
-    .brand-text-wrap { display: flex; flex-direction: column; gap: 12px; padding-top: 4px; }
+    .brand-content {
+        flex: 1;
+        min-width: 260px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .brand-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
     .brand-title {
-        display: inline-block;
-        background: var(--brand-dark);
-        padding: 5px 12px;
-        border-radius: 6px;
-        font-size: 0.86rem;
-        font-weight: 800;
-        letter-spacing: 0.4px;
-        line-height: 1.2;
-        align-self: flex-start;
-        color: #fff;
-    }
-    .brand-title .white { color: #ffffff; }
-    .brand-title .blue  { color: #60a5fa; }
-    .brand-title .red   { color: #f87171; }
-
-    .test-title {
-        font-size: 2rem;
-        font-weight: 900;
-        letter-spacing: -0.3px;
-        line-height: 1.1;
-        text-transform: uppercase;
-        color: var(--text);
-    }
-    .test-title .accent { color: var(--accent); }
-    .test-subtitle {
-        display: inline-block;
-        background: var(--accent);
-        color: #ffffff;
-        padding: 6px 14px;
-        border-radius: 6px;
-        font-size: 0.98rem;
+        font-size: 1.3rem;
         font-weight: 700;
         letter-spacing: 0.2px;
-        align-self: flex-start;
-        line-height: 1.3;
+        line-height: 1.2;
+    }
+    .brand-title .b-white { color: var(--text); }
+    .brand-title .b-blue  { color: #2563eb; }
+    .brand-title .b-red   { color: #dc2626; }
+    @media (prefers-color-scheme: dark) {
+        .brand-title .b-white { color: #f3f4f6; }
+        .brand-title .b-blue  { color: #60a5fa; }
+        .brand-title .b-red   { color: #f87171; }
     }
 
-    .socials { display: flex; gap: 10px; flex-wrap: wrap; flex-shrink: 0; align-self: flex-start; padding-top: 6px; }
+    .socials { display: flex; gap: 8px; flex-wrap: wrap; flex-shrink: 0; }
     .social-link {
-        display: inline-flex; align-items: center; gap: 8px;
-        padding: 10px 16px;
-        border-radius: 8px;
-        font-size: 0.88rem;
+        display: inline-flex; align-items: center; gap: 7px;
+        padding: 8px 13px;
+        border-radius: 7px;
+        font-size: 0.82rem;
         font-weight: 600;
         text-decoration: none;
         color: #fff;
@@ -123,10 +112,32 @@
     }
     .social-link:hover { filter: brightness(1.1); }
     .social-link:active { transform: scale(0.98); }
-    .social-link svg { width: 16px; height: 16px; fill: currentColor; }
+    .social-link svg { width: 15px; height: 15px; fill: currentColor; }
     .s-yt { background: #dc2626; }
     .s-vk { background: #0077ff; }
     .s-rt { background: #111827; }
+
+    .test-title {
+        font-size: 2.1rem;
+        font-weight: 800;
+        letter-spacing: -0.3px;
+        line-height: 1.15;
+        color: var(--text);
+    }
+
+    .test-accent {
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--text-soft);
+        line-height: 1.4;
+    }
+    .test-accent .accent-red {
+        color: #dc2626;
+        font-weight: 800;
+    }
+    @media (prefers-color-scheme: dark) {
+        .test-accent .accent-red { color: #f87171; }
+    }
 
     /* ---------- Прогресс-бар ---------- */
     .progress-wrap {
@@ -143,7 +154,7 @@
         transition: width 0.3s ease;
     }
 
-    /* ---------- Полоса вопросов (один ряд, компактно) ---------- */
+    /* ---------- Полоса вопросов ---------- */
     .q-nav {
         display: flex;
         flex-wrap: wrap;
@@ -500,14 +511,13 @@
 
     @media (max-width: 700px) {
         body { padding: 20px 14px 40px; font-size: 16px; }
-        .brand { gap: 14px; }
-        .brand-left { gap: 14px; }
-        .brand-avatar { width: 64px; height: 64px; }
-        .brand-title { font-size: 0.78rem; padding: 4px 10px; }
-        .test-title { font-size: 1.4rem; }
-        .test-subtitle { font-size: 0.86rem; padding: 5px 10px; }
+        .brand { gap: 16px; }
+        .brand-avatar { width: 88px; height: 88px; }
+        .brand-title { font-size: 1.05rem; }
+        .test-title { font-size: 1.5rem; }
+        .test-accent { font-size: 0.95rem; }
         .socials { width: 100%; }
-        .social-link { padding: 8px 12px; font-size: 0.8rem; }
+        .social-link { padding: 7px 11px; font-size: 0.78rem; }
         .q-card { padding: 20px 18px; }
         .q-text { font-size: 1.08rem; }
         .q-situation { padding: 13px 15px; font-size: 0.96rem; }
@@ -525,31 +535,31 @@
 <body>
 <div class="container">
 
-    <!-- Шапка -->
+    <!-- Шапка-баннер -->
     <div class="brand">
-        <div class="brand-left">
-            <img src="avatar.jpg" alt="Ilya Bike SPb" class="brand-avatar" onerror="this.style.display='none'">
-            <div class="brand-text-wrap">
+        <img src="avatar.jpg" alt="Ilya Bike SPb" class="brand-avatar" onerror="this.style.display='none'">
+        <div class="brand-content">
+            <div class="brand-top">
                 <div class="brand-title">
-                    <span class="white">Ilya</span> <span class="blue">Bike</span> <span class="red">SPb</span>
+                    <span class="b-white">Ilya</span><span class="b-blue">Bike</span><span class="b-red">SPb</span>
                 </div>
-                <div class="test-title">Тест, которого <span class="accent">нет</span> в ГИБДД</div>
-                <div class="test-subtitle">Теория управления мотоциклом в реальных условиях</div>
+                <div class="socials">
+                    <a class="social-link s-yt" href="https://youtube.com/@IlyaBikeSPb" target="_blank" rel="noopener">
+                        <svg viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1 31.4 31.4 0 0 0 .5-5.8 31.4 31.4 0 0 0-.5-5.8zM9.6 15.6V8.4l6.2 3.6z"/></svg>
+                        YouTube
+                    </a>
+                    <a class="social-link s-vk" href="https://vkvideo.ru/@club240087917" target="_blank" rel="noopener">
+                        <svg viewBox="0 0 24 24"><path d="M13.2 17.5c-6.1 0-9.7-4.3-9.8-11.4h3c.1 5.2 2.5 7.4 4.3 7.9V6.1h2.9v4.5c1.8-.2 3.7-2.2 4.4-4.5h2.9c-.5 2.8-2.6 4.8-4 5.6 1.4.7 3.8 2.4 4.7 5.8h-3.2c-.7-2.2-2.4-3.9-4.8-4.1v4.1h-.4z"/></svg>
+                        VK Video
+                    </a>
+                    <a class="social-link s-rt" href="https://rutube.ru/channel/149144" target="_blank" rel="noopener">
+                        <svg viewBox="0 0 24 24"><path d="M3 5h14a4 4 0 0 1 0 8h-4l4 6h-4.2l-4-6H7v6H3V5zm4 3v2h9a1 1 0 0 0 0-2H7z"/></svg>
+                        RuTube
+                    </a>
+                </div>
             </div>
-        </div>
-        <div class="socials">
-            <a class="social-link s-yt" href="https://youtube.com/@IlyaBikeSPb" target="_blank" rel="noopener">
-                <svg viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1 31.4 31.4 0 0 0 .5-5.8 31.4 31.4 0 0 0-.5-5.8zM9.6 15.6V8.4l6.2 3.6z"/></svg>
-                YouTube
-            </a>
-            <a class="social-link s-vk" href="https://vkvideo.ru/@club240087917" target="_blank" rel="noopener">
-                <svg viewBox="0 0 24 24"><path d="M13.2 17.5c-6.1 0-9.7-4.3-9.8-11.4h3c.1 5.2 2.5 7.4 4.3 7.9V6.1h2.9v4.5c1.8-.2 3.7-2.2 4.4-4.5h2.9c-.5 2.8-2.6 4.8-4 5.6 1.4.7 3.8 2.4 4.7 5.8h-3.2c-.7-2.2-2.4-3.9-4.8-4.1v4.1h-.4z"/></svg>
-                VK Video
-            </a>
-            <a class="social-link s-rt" href="https://rutube.ru/channel/149144" target="_blank" rel="noopener">
-                <svg viewBox="0 0 24 24"><path d="M3 5h14a4 4 0 0 1 0 8h-4l4 6h-4.2l-4-6H7v6H3V5zm4 3v2h9a1 1 0 0 0 0-2H7z"/></svg>
-                RuTube
-            </a>
+            <div class="test-title">Теория управления мотоциклом в реальных условиях</div>
+            <div class="test-accent">Вопросы и ответы, которых <span class="accent-red">нет в билетах ГИБДД!</span></div>
         </div>
     </div>
 
@@ -928,7 +938,6 @@
     const startTime = Date.now();
     let questionStartTime = Date.now();
 
-    // Главный таймер
     setInterval(() => {
         const s = Math.floor((Date.now() - startTime) / 1000);
         const el = document.getElementById('timer-text');
@@ -965,7 +974,6 @@
     }
 
     function updateProgress() {
-        // Прогресс = количество отвеченных / общее
         const done = answers.filter(a => a !== null).length;
         const pct = (done / TOTAL) * 100;
         document.getElementById('progress-bar').style.width = pct + '%';
@@ -989,8 +997,6 @@
 
         const item = data[currentIdx];
         const root = document.getElementById('quiz-root');
-
-        // Проверяем, есть ли картинка. Плейсхолдер покажем, если img не загрузится
         const imgSrc = (currentIdx + 1) + '.jpg';
 
         let html = `<div class="q-card">
@@ -1087,7 +1093,6 @@
         updateSkipped();
         updateProgress();
 
-        // Автоскролл к разбору
         setTimeout(() => {
             const exp = document.getElementById('exp-box');
             if (exp && window.innerWidth < 700) {
@@ -1118,7 +1123,6 @@
         }
     }
 
-    // Клавиатура
     document.addEventListener('keydown', (e) => {
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
 
@@ -1156,8 +1160,7 @@
         document.getElementById('progress-bar').style.width = '100%';
 
         const total = TOTAL;
-        const answered = answers.filter(a => a !== null && a.result !== 'viewed').length;
-        const pct = answered > 0 ? Math.round((score / total) * 100) : 0;
+        const pct = Math.round((score / total) * 100);
 
         let rank = '';
         if (score === total) rank = 'Идеально. Ни одной ошибки — ты уже знаешь этот материал лучше, чем билеты.';
@@ -1187,6 +1190,9 @@
 
         const root = document.getElementById('quiz-root');
         const hasErrors = answers.some(a => a && a.result === 'wrong');
+        const errorIdx = [];
+        answers.forEach((a, i) => { if (a && a.result === 'wrong') errorIdx.push(i); });
+
         root.innerHTML = `
             <div class="result-screen">
                 <div class="medal-wrap">${getMedalSvg(pct)}</div>
@@ -1196,25 +1202,30 @@
                 <div class="result-rank">${rank}</div>
                 <div class="block-stats">${blockHtml}</div>
                 <div class="result-actions">
-                    ${hasErrors ? '<button class="btn btn-secondary" onclick="retryErrors()">Пройти только ошибки</button>' : ''}
+                    ${hasErrors ? `<button class="btn btn-secondary" onclick="jumpToFirstError()">К первому ошибочному</button>` : ''}
                     <button class="btn btn-secondary" onclick="shareResult()">Поделиться результатом</button>
                     <button class="btn btn-primary" onclick="location.reload()">Пройти заново</button>
                 </div>
             </div>
         `;
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
 
-    function retryErrors() {
-        const errorIdx = [];
-        answers.forEach((a, i) => { if (a && a.result === 'wrong') errorIdx.push(i); });
-        if (errorIdx.length === 0) {
-            alert('У вас нет ошибок — отличный результат!');
-            return;
-        }
-        // В новой версии просто переходим на первый ошибочный вопрос
-        // (полноценный режим "только ошибки" убран, т.к. навигация свободна)
-        jumpTo(errorIdx[0]);
+        // Делаем кнопку доступной
+        window.__errorIdx = errorIdx;
+        window.__jumpToFirstError = function() {
+            // Возвращаемся в режим теста
+            document.querySelector('.result-screen').outerHTML = '';
+            document.getElementById('q-nav').style.display = 'flex';
+            document.getElementById('stats-panel').style.display = 'flex';
+            currentIdx = errorIdx[0];
+            questionStartTime = Date.now();
+            renderQuestion();
+            renderNav();
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+        window.jumpToFirstError = window.__jumpToFirstError;
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function shareResult() {
