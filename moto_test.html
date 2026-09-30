@@ -4,6 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Тест, которого нет в ГИБДД — Ilya Bike SPb</title>
+<meta name="author" content="Ilya Bike SPb">
+<meta name="copyright" content="© 2026 Ilya Bike SPb">
+<meta name="rights" content="Все права защищены">
+<meta name="description" content="Практический тест по управлению мотоциклом. 30 вопросов, которых нет в билетах ГИБДД. Автор — Ilya Bike SPb.">
+<meta property="og:title" content="Тест, которого нет в ГИБДД">
+<meta property="og:description" content="30 вопросов по управлению мотоциклом. Физика, а не ПДД. С разбором каждого ответа.">
+<meta property="og:image" content="avatar.jpg">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ilya Bike SPb">
 <style>
     :root {
         --bg: #fafafa;
@@ -57,14 +66,14 @@
 
     /* ---------- Шапка-баннер ---------- */
     .brand {
-        display: flex; align-items: flex-start; gap: 26px;
-        padding-bottom: 26px;
-        margin-bottom: 24px;
+        display: flex; align-items: center; gap: 24px;
+        padding-bottom: 24px;
+        margin-bottom: 22px;
         border-bottom: 1px solid var(--border);
         flex-wrap: wrap;
     }
     .brand-avatar {
-        width: 130px; height: 130px;
+        width: 110px; height: 110px;
         border-radius: 50%;
         flex-shrink: 0;
         object-fit: cover;
@@ -75,18 +84,18 @@
         min-width: 260px;
         display: flex;
         flex-direction: column;
-        gap: 12px;
+        gap: 10px;
     }
     .brand-top {
         display: flex;
         justify-content: space-between;
-        align-items: flex-start;
+        align-items: center;
         gap: 20px;
         flex-wrap: wrap;
     }
     .brand-title {
-        font-size: 1.3rem;
-        font-weight: 700;
+        font-size: 1.4rem;
+        font-weight: 800;
         letter-spacing: 0.2px;
         line-height: 1.2;
     }
@@ -102,9 +111,9 @@
     .socials { display: flex; gap: 8px; flex-wrap: wrap; flex-shrink: 0; }
     .social-link {
         display: inline-flex; align-items: center; gap: 7px;
-        padding: 8px 13px;
+        padding: 9px 14px;
         border-radius: 7px;
-        font-size: 0.82rem;
+        font-size: 0.86rem;
         font-weight: 600;
         text-decoration: none;
         color: #fff;
@@ -118,15 +127,15 @@
     .s-rt { background: #111827; }
 
     .test-title {
-        font-size: 2.1rem;
-        font-weight: 800;
+        font-size: 1.85rem;
+        font-weight: 900;
         letter-spacing: -0.3px;
         line-height: 1.15;
         color: var(--text);
     }
 
     .test-accent {
-        font-size: 1.05rem;
+        font-size: 1.1rem;
         font-weight: 600;
         color: var(--text-soft);
         line-height: 1.4;
@@ -507,17 +516,30 @@
     .footer-text { font-size: 0.96rem; color: var(--text-soft); line-height: 1.75; }
     .footer-text p { margin-bottom: 10px; }
     .footer-text p:last-child { margin-bottom: 0; }
+    .footer-text .footer-credit {
+        margin-top: 16px;
+        padding-top: 14px;
+        border-top: 1px solid var(--border);
+        font-size: 0.92rem;
+        color: var(--text-muted);
+        font-style: italic;
+    }
+    .footer-text .footer-credit strong {
+        color: var(--accent);
+        font-style: normal;
+        font-weight: 700;
+    }
     .footer-socials { margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
 
     @media (max-width: 700px) {
         body { padding: 20px 14px 40px; font-size: 16px; }
         .brand { gap: 16px; }
         .brand-avatar { width: 88px; height: 88px; }
-        .brand-title { font-size: 1.05rem; }
-        .test-title { font-size: 1.5rem; }
-        .test-accent { font-size: 0.95rem; }
+        .brand-title { font-size: 1.15rem; }
+        .test-title { font-size: 1.4rem; }
+        .test-accent { font-size: 0.98rem; }
         .socials { width: 100%; }
-        .social-link { padding: 7px 11px; font-size: 0.78rem; }
+        .social-link { padding: 8px 12px; font-size: 0.82rem; }
         .q-card { padding: 20px 18px; }
         .q-text { font-size: 1.08rem; }
         .q-situation { padding: 13px 15px; font-size: 0.96rem; }
@@ -597,6 +619,9 @@
             <p>В 800 вопросах официальных билетов <strong>нет ни одного вопроса про управление мотоциклом</strong>. Вообще ни одного. Только пара про эксплуатацию и допустимую глубину протектора.</p>
             <p>Как тормозить в наклоне, что делать на песке, как вести себя в слепой зоне фуры — об этом в билетах ни слова, а на дороге именно это решает, останешься ты на колёсах или нет.</p>
             <p>Этот тест собран, чтобы закрыть этот пробел. 30 вопросов построены на физике управления и реальных городских ситуациях, а не на формальных правилах.</p>
+            <p class="footer-credit">
+                Тест создан автором канала <strong>IlyaBikeSPb</strong> для себя и для общества райдеров. Подписывайтесь — будет интересно.
+            </p>
         </div>
         <div class="footer-socials">
             <a class="social-link s-yt" href="https://youtube.com/@IlyaBikeSPb" target="_blank" rel="noopener">
@@ -1209,10 +1234,8 @@
             </div>
         `;
 
-        // Делаем кнопку доступной
         window.__errorIdx = errorIdx;
         window.__jumpToFirstError = function() {
-            // Возвращаемся в режим теста
             document.querySelector('.result-screen').outerHTML = '';
             document.getElementById('q-nav').style.display = 'flex';
             document.getElementById('stats-panel').style.display = 'flex';
