@@ -124,7 +124,6 @@
     .test-accent .accent-red { color: #dc2626; font-weight: 800; }
     [data-theme="dark"] .test-accent .accent-red { color: #f87171; }
 
-    /* Онбординг-плашка */
     .onboard {
         background: var(--card);
         border: 1px solid var(--border);
@@ -160,7 +159,7 @@
     .progress-wrap { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; margin-bottom: 16px; }
     .progress-bar { height: 100%; background: var(--accent); width: 0%; transition: width 0.3s ease; }
 
-    .q-nav { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 14px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 10px; }
+    .q-nav { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 14px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 18px; }
     .q-nav-item {
         width: 32px; height: 32px; flex: 0 0 32px;
         display: flex; align-items: center; justify-content: center;
@@ -177,25 +176,6 @@
     .q-nav-item.current.answered-correct,
     .q-nav-item.current.answered-wrong,
     .q-nav-item.current.answered-viewed { background: var(--accent); color: #fff; border-color: var(--accent); }
-
-    /* Мини-карта */
-    .mini-map {
-        display: flex;
-        gap: 4px;
-        padding: 0 14px 14px;
-        flex-wrap: wrap;
-    }
-    .mini-dot {
-        width: 10px; height: 10px;
-        border-radius: 50%;
-        background: var(--border-strong);
-        transition: background 0.2s;
-        flex-shrink: 0;
-    }
-    .mini-dot.current { background: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
-    .mini-dot.correct { background: var(--correct); }
-    .mini-dot.wrong { background: var(--wrong); }
-    .mini-dot.viewed { background: var(--accent); opacity: 0.6; }
 
     .stats-bar {
         display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
@@ -581,7 +561,6 @@
 
     <div class="progress-wrap"><div class="progress-bar" id="progress-bar"></div></div>
     <div class="q-nav" id="q-nav"></div>
-    <div class="mini-map" id="mini-map"></div>
 
     <div class="stats-bar" id="stats-panel">
         <span>Вопрос: <b id="progress-text">1 / 30</b></span>
@@ -959,7 +938,7 @@
             "Подождать, пока все машины поедут вперёд, и двигаться между их бортами",
             "Начать движение на полувыжатом сцеплении назад, чтобы проверить отсутствие отката"
           ], c: 1,
-          e: "<p>Мотоцикл разгоняется быстрее машин. Но <strong>зелёный — это лишь разрешение начать движение, а не гарантия безопасности.</strong></p><p>По пересекаемой улице часто «долетают» на высокой скорости те, кто не успел на свой зелёный. Отсюда и «долётуны» — те, кто летит на красный.</p><p><strong>Правило:</strong> сначала <strong>короткий взгляд влево-вправо</strong>, убедиться, что машины на поперечной улице реально остановились, и только потом — динамичный выезд.</p>",
+          e: "<p>Мотоцикл разгоняется быстрее машин. Но <strong>зелёный — это лишь разрешение начать движение, а не гарантия безопасности.</strong></p><p>По пересекаемой улице часто «долетают» на высокой скорости те, кто не успел на свой зелёный. Таких райдеры называют «долётунами» — они летят на красный.</p><p><strong>Правило:</strong> сначала <strong>короткий взгляд влево-вправо</strong>, убедиться, что машины на поперечной улице реально остановились, и только потом — динамичный выезд.</p>",
           dos: ["Перед выездом — короткий взгляд влево-вправо", "Убедиться, что поперечные машины остановились", "Только потом — динамичный выезд"],
           donts: ["Срываться на полный газ", "Ехать «между бортами»", "Стартовать вслепую"]
         },
@@ -1098,24 +1077,6 @@
         nav.innerHTML = html;
     }
 
-    function renderMiniMap() {
-        const map = document.getElementById('mini-map');
-        if (!map) return;
-        let html = '';
-        for (let i = 0; i < TOTAL; i++) {
-            let cls = 'mini-dot';
-            if (i === currentIdx) cls += ' current';
-            if (answers[i] !== null) {
-                const r = answers[i].result;
-                if (r === 'correct') cls += ' correct';
-                else if (r === 'wrong') cls += ' wrong';
-                else if (r === 'viewed') cls += ' viewed';
-            }
-            html += `<div class="${cls}" title="Вопрос ${i+1}"></div>`;
-        }
-        map.innerHTML = html;
-    }
-
     function updateProgress() {
         const done = answers.filter(a => a !== null).length;
         document.getElementById('progress-bar').style.width = (done / TOTAL * 100) + '%';
@@ -1125,7 +1086,6 @@
         currentIdx = idx;
         renderQuestion();
         renderNav();
-        renderMiniMap();
         updateProgress();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -1165,7 +1125,6 @@
         const root = document.getElementById('quiz-root');
         const imgSrc = (currentIdx + 1) + '.jpg';
 
-        // Вердикт
         let verdictHtml = '';
         if (isAnswered) {
             const r = answers[currentIdx].result;
@@ -1298,7 +1257,6 @@
         if (btnConfirm) btnConfirm.remove();
         const btnNext = document.getElementById('btn-next');
         if (btnNext) btnNext.disabled = false;
-        // Обновляем вердикт
         const wrap = document.querySelector('.q-num-wrap');
         if (wrap) {
             const oldV = wrap.querySelector('.q-verdict');
@@ -1309,7 +1267,6 @@
             wrap.appendChild(v);
         }
         renderNav();
-        renderMiniMap();
         updateSkipped();
         updateProgress();
         if (autoNext && userAns === shuffled.c && currentIdx < TOTAL - 1) {
@@ -1346,7 +1303,6 @@
             wrap.appendChild(v);
         }
         renderNav();
-        renderMiniMap();
         updateSkipped();
         updateProgress();
     }
@@ -1356,7 +1312,6 @@
             currentIdx--;
             renderQuestion();
             renderNav();
-            renderMiniMap();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     }
@@ -1365,7 +1320,6 @@
             currentIdx++;
             renderQuestion();
             renderNav();
-            renderMiniMap();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
             finishQuiz();
@@ -1424,7 +1378,6 @@
 
     function finishQuiz() {
         document.getElementById('q-nav').style.display = 'none';
-        document.getElementById('mini-map').style.display = 'none';
         document.getElementById('stats-panel').style.display = 'none';
         document.getElementById('progress-bar').style.width = '100%';
         const total = TOTAL;
@@ -1462,7 +1415,6 @@
         if (rank.level) medalHtml = `<div class="medal-wrap">${getMedalSvg(rank.level)}</div>`;
         else medalHtml = `<div class="medal-wrap empty">✕</div>`;
 
-        // Блок лучший/слабый
         let bestWorstHtml = '';
         const answeredCount = answers.filter(a => a !== null).length;
         if (answeredCount >= 10 && bestBlock && worstBlock) {
@@ -1471,7 +1423,6 @@
             </div>`;
         }
 
-        // Список ошибок
         let errorListHtml = '';
         if (hasErrors) {
             errorListHtml = `<div class="error-list">
@@ -1502,12 +1453,10 @@
         window.jumpToError = function(idx) {
             document.querySelector('.result-screen').outerHTML = '';
             document.getElementById('q-nav').style.display = 'flex';
-            document.getElementById('mini-map').style.display = 'flex';
             document.getElementById('stats-panel').style.display = 'flex';
             currentIdx = idx;
             renderQuestion();
             renderNav();
-            renderMiniMap();
             updateProgress();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
@@ -1546,7 +1495,6 @@
     }
 
     renderNav();
-    renderMiniMap();
     renderQuestion();
     updateProgress();
     updateSkipped();
