@@ -299,6 +299,7 @@
     .exp-section.dont .exp-section-title { color: var(--wrong); }
     .exp-section ul { margin: 8px 0; padding-left: 0; list-style: none; }
     .exp-section ul li { padding-left: 24px; position: relative; margin-bottom: 6px; }
+    .exp-section:not(.do):not(.dont) ul li { padding-left: 0; }
     .exp-section.do ul li::before { content: "✓"; position: absolute; left: 4px; color: var(--correct); font-weight: 900; }
     .exp-section.dont ul li::before { content: "✕"; position: absolute; left: 6px; color: var(--wrong); font-weight: 900; }
     .exp-note {
