@@ -1160,7 +1160,15 @@
         renderQuestion();
         renderNav();
         updateProgress();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        scrollToCard();
+    }
+
+    function scrollToCard() {
+        const card = document.querySelector('.q-card');
+        if (card) {
+            const top = card.getBoundingClientRect().top + window.pageYOffset - 70;
+            window.scrollTo({ top: top, behavior: 'smooth' });
+        }
     }
 
     function shuffleArray(arr) {
@@ -1385,7 +1393,7 @@
             currentIdx--;
             renderQuestion();
             renderNav();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            scrollToCard();
         }
     }
     function goNext() {
@@ -1393,7 +1401,7 @@
             currentIdx++;
             renderQuestion();
             renderNav();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            scrollToCard();
         } else {
             finishQuiz();
         }
@@ -1531,7 +1539,7 @@
             renderQuestion();
             renderNav();
             updateProgress();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            scrollToCard();
         };
         window.jumpToFirstError = function() {
             window.jumpToError(errorIdx[0]);
